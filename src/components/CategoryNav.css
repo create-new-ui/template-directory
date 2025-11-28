@@ -1,4 +1,4 @@
-.category-nav-container {
+  .category-nav-container {
 	position: sticky;
 	top: 0;
 	width: 100%;
@@ -10,7 +10,7 @@
   
   .category-nav {
 	width: 100%;
-	box-shadow: inset 0px -1px 0px var(--border-muted);
+	box-shadow: inset 0px -0.5px 0px var(--border-muted);
 	white-space: nowrap;
 	overflow-x: scroll;
 	overflow-y: hidden;
@@ -73,3 +73,5 @@
   .nav-fade-right.hide {
 	opacity: 0;
   }
+
+  

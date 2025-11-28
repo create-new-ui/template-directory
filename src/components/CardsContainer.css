@@ -4,3 +4,16 @@
   gap: var(--spacing-05);
   padding: var(--spacing-00);
 }
+
+.infinite-scroll-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-09);
+  min-height: 4rem;
+}
+
+.loading-text {
+  color: var(--content-secondary-alt);
+  font-size: var(--desktop-body-sm);
+}
