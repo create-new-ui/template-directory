@@ -9,10 +9,10 @@
     "src/data/tools.json"
   ],
   "scripts": {
-    "dev": "astro dev",
+    "dev": "node scripts/add-slugs.js && astro dev",
     "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro dev",
+    "build": "node scripts/add-slugs.js && astro build",
+    "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {

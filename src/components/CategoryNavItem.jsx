@@ -10,7 +10,9 @@ export default function CategoryNavItem(props) {
 
   const handleNavigation = (e) => {
     e.preventDefault();
-    navigate(`/categories/${category}`, {
+    // Use simplified URL format: /:category (except 'all' still goes to /)
+    const path = category === 'all' ? '/' : `/${category}`;
+    navigate(path, {
       history: "push",
       state: { category },
     });

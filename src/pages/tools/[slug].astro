@@ -1,0 +1,258 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import data from "../../data/tools.json";
+import "@new-ui/foundations";
+
+export function getStaticPaths() {
+  const paths: any[] = [];
+  
+  data.tools.forEach((category: any) => {
+    category.content.forEach((tool: any) => {
+      if (tool.slug) {
+        paths.push({ params: { slug: tool.slug, category: category.category } });
+      }
+    });
+  });
+  
+  return paths;
+}
+
+export const prerender = true;
+
+const { slug } = Astro.params;
+const found = data.tools.flatMap((t) => t.content).find((x) => x.slug === slug) || null;
+
+if (!found) {
+  // If slug not found, render not-found behaviour (Astro will handle as 404)
+  throw new Error(`Tool not found: ${slug}`);
+}
+
+const tool = found;
+const category = tool.category || 'all';
+
+// helpers
+function extractDomain(url: string) {
+  try { return new URL(url).hostname.replace('www.', ''); } catch { return '' }
+}
+function formatDate(dateStr: string) {
+  try { return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); } catch { return dateStr }
+}
+
+const domain = extractDomain(tool.url || '');
+const formattedDate = formatDate(tool['date-added']);
+const canonicalUrl = `https://riseofmachine.com/tools/${tool.slug}`;
+const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
+
+const pageTitle = `${tool.title} - AI Tool | Rise of Machine`;
+const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
+---
+
+<Layout site={`Rise of Machine - ${tool.title}`} title={tool.title} tagline={tool.body}>
+
+  <head>
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={tool.title} />
+    <meta property="og:description" content={tool.body} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={faviconUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+
+  <main>
+    <div class="tool-detail-modal-backdrop" id="modalBackdrop">
+      <div class="tool-detail-modal" id="toolModal">
+        <button class="tool-detail-close-btn" id="closeModal" title="Close (Press ESC)" aria-label="Close tool details">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+
+        <div class="tool-detail-header">
+          <div class="tool-icon-container">
+            <img src={faviconUrl} alt={`${tool.title} icon`} class="tool-icon" onerror="this.style.display='none'" />
+          </div>
+          <div class="tool-header-content">
+            <h1 class="tool-title">{tool.title}</h1>
+            <p class="tool-domain">{domain}</p>
+          </div>
+        </div>
+
+        <div class="tool-detail-content">
+          <p class="tool-description">{tool.body}</p>
+
+          <div class="tool-metadata-grid">
+            <div class="metadata-item">
+              <span class="metadata-label">Pricing</span>
+              <span class="metadata-value">{tool.tag}</span>
+            </div>
+            <div class="metadata-item">
+              <span class="metadata-label">Category</span>
+              <a href={category === 'all' ? '/' : `/${category}`} class="metadata-value category-link">{category}</a>
+            </div>
+            <div class="metadata-item">
+              <span class="metadata-label">Added</span>
+              <span class="metadata-value">{formattedDate}</span>
+            </div>
+          </div>
+
+          <div class="tool-detail-placeholder">
+            <p><strong>Features & Use Cases</strong> coming soon</p>
+            <p>Tool details, feature highlights, and comparison data will be added here.</p>
+          </div>
+
+          <div class="tool-detail-actions">
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" class="btn-primary">Visit {tool.title}</a>
+          </div>
+
+          <div class="tool-detail-share">
+            <h3 class="share-title">Share this tool</h3>
+            <div class="share-buttons">
+              <a href={`https://twitter.com/intent/tweet?text=Check out ${tool.title} - ${tool.body}&url=${canonicalUrl}&via=planetabhi`} target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Twitter" aria-label="Share on Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 9-1 9-5.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+              </a>
+              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${canonicalUrl}`} target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+              <a href={`https://reddit.com/submit?url=${canonicalUrl}&title=${tool.title}: ${tool.body}`} target="_blank" rel="noopener noreferrer" class="share-btn" title="Share on Reddit" aria-label="Share on Reddit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 12a1 1 0 11-2 0 1 1 0 012 0zm6 0a1 1 0 11-2 0 1 1 0 012 0z" fill="white"/><path d="M12 15c-1.5 0-2.5.5-3 1" stroke="white" stroke-width="2"/></svg>
+              </a>
+              <button class="share-btn" id="copyLinkBtn" title="Copy link to clipboard" aria-label="Copy link to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="tool-detail-nav">
+            <a href={category === 'all' ? '/' : `/${category}`} class="nav-link">← Back to {category === 'all' ? 'all' : category}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    (function () {
+      function closeModal() {
+        // remove modal marker before navigating back
+        document.body.removeAttribute('data-modal-open');
+        document.body.style.overflow = '';
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = '/';
+        }
+      }
+
+      // Delegate clicks for close, backdrop, and copy
+      document.addEventListener('click', (e) => {
+        const close = e.target.closest('.tool-detail-close-btn');
+        if (close) return closeModal();
+
+        // If clicked outside the modal but inside backdrop
+        const backdrop = e.target.closest('.tool-detail-modal-backdrop');
+        const modal = e.target.closest('.tool-detail-modal');
+        if (backdrop && !modal) return closeModal();
+
+        const copyBtn = e.target.closest('#copyLinkBtn');
+        if (copyBtn) {
+          const url = window.location.href;
+          navigator.clipboard.writeText(url).then(() => {
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            copyBtn.title = 'Copied!';
+            setTimeout(() => {
+              copyBtn.innerHTML = original;
+              copyBtn.title = 'Copy link to clipboard';
+            }, 2000);
+          });
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // Mark that modal is open so we can hide background elements (title/description)
+      document.body.setAttribute('data-modal-open', 'true');
+      // Prevent background scroll while modal open
+      document.body.style.overflow = 'hidden';
+
+      // Ensure state cleanup on page hide/unload
+      window.addEventListener('pagehide', () => {
+        document.body.removeAttribute('data-modal-open');
+        document.body.style.overflow = '';
+      });
+      window.addEventListener('unload', () => {
+        document.body.removeAttribute('data-modal-open');
+        document.body.style.overflow = '';
+      });
+    })();
+  </script>
+
+  <style is:global>
+    /* Inherit fonts and base styles from Layout and foundations */
+    /* When a modal detail page is open, hide the page title + description behind it */
+    body[data-modal-open="true"] .title,
+    body[data-modal-open="true"] .description-text {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: opacity 120ms ease;
+    }
+  </style>
+
+  <style scoped>
+    .tool-detail-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000000;
+      padding: var(--spacing-05);
+      overflow-y: auto;
+    }
+
+    .tool-detail-modal {
+      background-color: var(--background);
+      border-radius: var(--spacing-03);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      padding: var(--spacing-09);
+      border: 1px solid var(--border-muted);
+    }
+
+    .tool-detail-close-btn { position: absolute; top: var(--spacing-06); right: var(--spacing-06); background: none; border: none; cursor: pointer; color: var(--content-secondary); width: var(--spacing-09); height: var(--spacing-09); display:flex; align-items:center; justify-content:center; border-radius:var(--spacing-02); }
+    .tool-detail-close-btn:hover { background-color: var(--background-secondary); color: var(--content-primary); }
+
+    .tool-detail-header { display:flex; gap: var(--spacing-05); align-items:flex-start; margin-bottom: var(--spacing-09); }
+    .tool-icon { width:64px; height:64px; border-radius: var(--spacing-02); background-color: var(--background-secondary); border: 1px solid var(--border-muted); }
+    .tool-title { margin:0; font-size: var(--desktop-h4); color: var(--content-primary); }
+    .tool-domain { margin:0; color: var(--content-secondary-alt); }
+
+    .tool-detail-content { display:flex; flex-direction:column; gap: var(--spacing-08); }
+    .tool-description { margin:0; color: var(--content-primary); }
+    .tool-metadata-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-04); padding: var(--spacing-05); background-color: var(--background-secondary); border-radius: var(--spacing-02); }
+    .metadata-label { font-size: var(--desktop-caption); color: var(--content-secondary-alt); text-transform: uppercase; }
+    .metadata-value { color: var(--content-primary); font-weight:500 }
+    .category-link { color: var(--accent); }
+
+    .tool-detail-placeholder { padding: var(--spacing-05); background-color: var(--background-secondary); border-left: 3px solid var(--accent); border-radius: var(--spacing-02); }
+    .btn-primary { display:inline-block; padding: var(--spacing-04) var(--spacing-05); background-color: var(--accent); color:white; border-radius: var(--spacing-02); text-decoration:none; font-weight:600 }
+
+    .share-buttons { display:flex; gap: var(--spacing-03); }
+    .share-btn { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius: var(--spacing-02); background-color: var(--background-secondary); border:1px solid var(--border-muted); color:var(--content-secondary); }
+    .share-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    .tool-detail-nav { padding-top: var(--spacing-05); border-top: 1px solid var(--border-muted); display:flex; gap: var(--spacing-03); }
+    .nav-link { color: var(--content-secondary); }
+
+    @media (max-width: 768px) { .tool-detail-modal { padding: var(--spacing-06); margin: var(--spacing-05); } .tool-icon { width:48px; height:48px } }
+  </style>
+
+</Layout>

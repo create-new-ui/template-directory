@@ -1,7 +1,10 @@
 import "./Card.css";
 
 export default function Card(props) {
-  const { href, title, body, tag, dateAdded } = props;
+  const { href, title, body, tag, dateAdded, slug, category } = props;
+  
+  // Use slug-based internal URL if available, otherwise fall back to external URL
+  const linkUrl = slug ? `/tools/${slug}` : href;
 
   const isNew = () => {
     if (!dateAdded) return false;
@@ -16,7 +19,17 @@ export default function Card(props) {
 
   return (
     <li className="link-card">
-      <a href={href}>
+      <a
+        href={linkUrl}
+        onClick={() => {
+          try {
+            // Tell the listing to save its UI state before navigation
+            window.dispatchEvent(new CustomEvent('tools:save-state'));
+          } catch (err) {
+            // ignore
+          }
+        }}
+      >
         <strong className="nu-c-h6 nu-u-mt-1 nu-u-mb-1">{title}</strong>
         <p className="nu-c-fs-small nu-u-mt-1 nu-u-mb-1">{body}</p>
         <p className="distribution">

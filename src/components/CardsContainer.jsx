@@ -22,6 +22,32 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
   const [isLoading, setIsLoading] = useState(false);
   const loaderRef = useRef(null);
 
+  // Restore saved UI state (scroll position + displayedCount) if present
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("toolsState");
+      if (raw) {
+        const state = JSON.parse(raw);
+        // Only restore when the saved filter matches current filter
+        if (state && state.filter === filter) {
+          if (state.displayedCount && state.displayedCount > displayedCount) {
+            setDisplayedCount(state.displayedCount);
+          }
+          // Restore scroll a tick later so content has rendered
+          setTimeout(() => {
+            if (typeof window !== "undefined" && typeof state.scrollY !== "undefined") {
+              window.scrollTo(0, state.scrollY);
+            }
+          }, 50);
+        }
+        sessionStorage.removeItem("toolsState");
+      }
+    } catch (err) {
+      // ignore
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const filteredCards = useMemo(() => {
     const base = data.tools
       .filter((item) => filter === "all" || filter === item.category)
@@ -66,6 +92,57 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
     setDisplayedCount(ITEMS_PER_PAGE);
   }, [filter]);
 
+  // Listen for save-state events (dispatched before navigating to a tool detail)
+  useEffect(() => {
+    const handleSaveState = () => {
+      try {
+        const state = {
+          filter,
+          displayedCount,
+          scrollY: typeof window !== "undefined" ? window.scrollY || window.pageYOffset : 0,
+        };
+        sessionStorage.setItem("toolsState", JSON.stringify(state));
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    window.addEventListener("tools:save-state", handleSaveState);
+    return () => window.removeEventListener("tools:save-state", handleSaveState);
+  }, [displayedCount, filter]);
+
+  // Also attempt restore when page is shown (useful when navigating back)
+  useEffect(() => {
+    const tryRestore = () => {
+      try {
+        const raw = sessionStorage.getItem("toolsState");
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        if (state && state.filter === filter) {
+          if (state.displayedCount && state.displayedCount > displayedCount) {
+            setDisplayedCount(state.displayedCount);
+          }
+          setTimeout(() => {
+            if (typeof window !== "undefined" && typeof state.scrollY !== "undefined") {
+              window.scrollTo(0, state.scrollY);
+            }
+          }, 50);
+        }
+        sessionStorage.removeItem("toolsState");
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    window.addEventListener('pageshow', tryRestore);
+    window.addEventListener('astro:page-load', tryRestore);
+    return () => {
+      window.removeEventListener('pageshow', tryRestore);
+      window.removeEventListener('astro:page-load', tryRestore);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter]);
+
   // Intersection Observer for infinite scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -94,7 +171,7 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
   return (
     <section>
       <ul role="list" className="link-card-grid">
-        {displayedCards.map(({ url, title, body, tag, "date-added": dateAdded }, i) => (
+        {displayedCards.map(({ url, title, body, tag, "date-added": dateAdded, slug, category }, i) => (
           <Card
             key={`${title}-${i}`}
             href={url}
@@ -102,6 +179,8 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
             body={body}
             tag={tag}
             dateAdded={dateAdded}
+            slug={slug}
+            category={category}
           />
         ))}
       </ul>
