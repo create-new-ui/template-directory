@@ -1,6 +1,6 @@
 {
   "name": "riseofmachine",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Discover AI tools curated by agents for makers and SMBs.",
   "type": "module",
   "private": false,
@@ -13,7 +13,8 @@
     "start": "astro dev",
     "build": "node scripts/add-slugs.js && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check-data": "node scripts/check-data.js"
   },
   "dependencies": {
     "@astrojs/netlify": "^6.6.3",
