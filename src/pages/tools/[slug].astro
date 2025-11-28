@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import data from "../../data/tools.json";
 import "@new-ui/foundations";
+import { parse } from "node-html-parser";
 
 export function getStaticPaths() {
   const paths: any[] = [];
@@ -45,6 +46,255 @@ const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
 
 const pageTitle = `${tool.title} - AI Tool | Rise of Machine`;
 const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
+
+type MetadataBlock = {
+  basic: {
+    title: string | null;
+    description: string | null;
+    canonicalUrl: string | null;
+    favicon: string | null;
+  };
+  openGraph: {
+    title: string | null;
+    description: string | null;
+    image: string | null;
+    type: string | null;
+    siteName: string | null;
+  };
+  brand: {
+    author: string | null;
+    twitterHandle: string | null;
+    emails: string[];
+    phones: string[];
+    contactUrls: string[];
+  };
+  extras: {
+    themeColor: string | null;
+    keywords: string | null;
+    twitterCard: string | null;
+    applicationName: string | null;
+  };
+} | null;
+
+const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+const fetchTimeoutMs = 8000;
+const maxHtmlBytes = 500_000; // prevent parsing excessively large pages
+const metadataCache = new Map<string, Promise<MetadataBlock>>();
+
+const liveMetadata = await fetchExternalMetadata(tool.url || '');
+
+const hasBasicMetadata = Boolean(
+  liveMetadata &&
+    (liveMetadata.basic.title ||
+      liveMetadata.basic.description ||
+      liveMetadata.basic.canonicalUrl ||
+      liveMetadata.basic.favicon)
+);
+
+const hasOpenGraphMetadata = Boolean(
+  liveMetadata &&
+    (liveMetadata.openGraph.title ||
+      liveMetadata.openGraph.description ||
+      liveMetadata.openGraph.image ||
+      liveMetadata.openGraph.type ||
+      liveMetadata.openGraph.siteName)
+);
+
+const hasBrandMetadata = Boolean(
+  liveMetadata &&
+    (liveMetadata.brand.author ||
+      liveMetadata.brand.twitterHandle ||
+      liveMetadata.brand.emails.length ||
+      liveMetadata.brand.phones.length ||
+      liveMetadata.brand.contactUrls.length)
+);
+
+const hasExtraMetadata = Boolean(
+  liveMetadata &&
+    (liveMetadata.extras.themeColor ||
+      liveMetadata.extras.keywords ||
+      liveMetadata.extras.twitterCard ||
+      liveMetadata.extras.applicationName)
+);
+
+function normalizeToolUrl(rawUrl: string | undefined | null) {
+  if (!rawUrl) return null;
+  const trimmed = rawUrl.trim();
+  if (!trimmed) return null;
+
+  const candidate = /^[a-zA-Z]+:\/\//.test(trimmed) ? trimmed : `https://${trimmed}`;
+
+  try {
+    return new URL(candidate).href;
+  } catch {
+    return null;
+  }
+}
+
+async function readResponseWithLimit(response: Response) {
+  if (!response.body) {
+    return await response.text();
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let received = 0;
+  let result = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    if (!value) continue;
+
+    const remaining = maxHtmlBytes - received;
+    if (remaining <= 0) {
+      break;
+    }
+
+    const chunk = value.byteLength > remaining ? value.slice(0, remaining) : value;
+    received += chunk.byteLength;
+    result += decoder.decode(chunk, { stream: true });
+
+    if (value.byteLength > remaining) {
+      break;
+    }
+  }
+
+  result += decoder.decode();
+  return result;
+}
+
+async function fetchExternalMetadata(targetUrl: string): Promise<MetadataBlock> {
+  const normalizedUrl = normalizeToolUrl(targetUrl);
+  if (!normalizedUrl) return null;
+
+  if (metadataCache.has(normalizedUrl)) {
+    return metadataCache.get(normalizedUrl)!;
+  }
+
+  const metadataPromise = (async () => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), fetchTimeoutMs);
+
+    try {
+      const response = await fetch(normalizedUrl, {
+        headers: { "User-Agent": userAgent },
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        console.warn(`[metadata] Non-OK response (${response.status}) for ${normalizedUrl}`);
+        return null;
+      }
+
+      const html = await readResponseWithLimit(response);
+      const root = parse(html);
+      const baseUrl = new URL(normalizedUrl);
+
+      const pickMetaByName = (name: string) =>
+        root.querySelector(`meta[name="${name}"]`)?.getAttribute("content")?.trim() ?? null;
+
+      const pickMetaByProperty = (property: string) =>
+        root.querySelector(`meta[property="${property}"]`)?.getAttribute("content")?.trim() ?? null;
+
+      const pickLinkByRel = (rel: string) =>
+        root.querySelector(`link[rel="${rel}"]`)?.getAttribute("href")?.trim() ?? null;
+
+      const toAbsolute = (value: string | null) => {
+        if (!value) return null;
+        try {
+          return new URL(value, baseUrl).href;
+        } catch {
+          return value;
+        }
+      };
+
+      const unique = <T,>(items: (T | null | undefined)[]) =>
+        Array.from(new Set(items.filter(Boolean) as T[]));
+
+      const emailAddresses = unique(
+        root.querySelectorAll('a[href^="mailto:"]').map((anchor) =>
+          anchor.getAttribute("href")?.replace("mailto:", "").trim() ?? null
+        )
+      );
+
+      const phoneNumbers = unique(
+        root.querySelectorAll('a[href^="tel:"]').map((anchor) =>
+          anchor.getAttribute("href")?.replace("tel:", "").trim() ?? null
+        )
+      );
+
+      const contactUrls = unique(
+        root.querySelectorAll("a[href]").map((anchor) => {
+          const href = anchor.getAttribute("href") ?? "";
+          const text = anchor.text?.toLowerCase() ?? "";
+          if (!href) return null;
+          const normalizedHref = href.toLowerCase();
+          if (
+            normalizedHref.includes("contact") ||
+            normalizedHref.includes("support") ||
+            text.includes("contact") ||
+            text.includes("support")
+          ) {
+            return toAbsolute(href);
+          }
+          return null;
+        })
+      ).slice(0, 3);
+
+      const basicTitle =
+        root.querySelector("title")?.text?.trim() ??
+        pickMetaByProperty("og:title") ??
+        pickMetaByName("title") ??
+        null;
+
+      return {
+        basic: {
+          title: basicTitle,
+          description: pickMetaByName("description") ?? pickMetaByProperty("og:description"),
+          canonicalUrl: toAbsolute(pickLinkByRel("canonical")) ?? normalizedUrl,
+          favicon:
+            toAbsolute(pickLinkByRel("icon") ?? pickLinkByRel("shortcut icon")) ??
+            `https://www.google.com/s2/favicons?sz=128&domain=${baseUrl.hostname}`,
+        },
+        openGraph: {
+          title: pickMetaByProperty("og:title"),
+          description: pickMetaByProperty("og:description"),
+          image: toAbsolute(pickMetaByProperty("og:image")),
+          type: pickMetaByProperty("og:type"),
+          siteName: pickMetaByProperty("og:site_name") ?? pickMetaByName("application-name"),
+        },
+        brand: {
+          author: pickMetaByName("author") ?? pickMetaByName("creator"),
+          twitterHandle:
+            root.querySelector('meta[name="twitter:site"]')?.getAttribute("content")?.trim() ?? null,
+          emails: emailAddresses,
+          phones: phoneNumbers,
+          contactUrls,
+        },
+        extras: {
+          themeColor: pickMetaByName("theme-color"),
+          keywords: pickMetaByName("keywords"),
+          twitterCard:
+            root.querySelector('meta[name="twitter:card"]')?.getAttribute("content")?.trim() ?? null,
+          applicationName: pickMetaByName("application-name"),
+        },
+      };
+    } catch (error) {
+      if ((error as Error).name === "AbortError") {
+        console.warn(`[metadata] Timed out fetching ${normalizedUrl}`);
+      } else {
+        console.warn(`[metadata] Failed fetching ${normalizedUrl}: ${(error as Error).message}`);
+      }
+      return null;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  })();
+
+  metadataCache.set(normalizedUrl, metadataPromise);
+  return metadataPromise;
+}
 ---
 
 <Layout site={`Rise of Machine - ${tool.title}`} title={tool.title} tagline={tool.body}>
@@ -78,31 +328,230 @@ const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
         </div>
 
         <div class="tool-detail-content">
-          <p class="tool-description">{tool.body}</p>
-
-          <div class="tool-metadata-grid">
-            <div class="metadata-item">
-              <span class="metadata-label">Pricing</span>
-              <span class="metadata-value">{tool.tag}</span>
+          <section class="tool-summary">
+            <p class="tool-description">{tool.body}</p>
+            <div class="summary-meta">
+              <span class="summary-label">Primary domain</span>
+              {tool.url ? (
+                <a href={tool.url} target="_blank" rel="noopener noreferrer" class="summary-value">{domain || tool.url}</a>
+              ) : (
+                <span class="summary-value summary-value--muted">Not provided</span>
+              )}
             </div>
-            <div class="metadata-item">
-              <span class="metadata-label">Category</span>
-              <a href={category === 'all' ? '/' : `/${category}`} class="metadata-value category-link">{category}</a>
-            </div>
-            <div class="metadata-item">
-              <span class="metadata-label">Added</span>
-              <span class="metadata-value">{formattedDate}</span>
-            </div>
-          </div>
+          </section>
 
-          <div class="tool-detail-placeholder">
-            <p><strong>Features & Use Cases</strong> coming soon</p>
-            <p>Tool details, feature highlights, and comparison data will be added here.</p>
-          </div>
+          <section class="tool-section">
+            <header class="section-header">
+              <p class="section-eyebrow">Directory data</p>
+              <div>
+                <h2 class="section-title">Tool snapshot</h2>
+                <p class="section-subtitle">Hand-curated fields that we track for every listing.</p>
+              </div>
+            </header>
 
-          <div class="tool-detail-actions">
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" class="btn-primary">Visit {tool.title}</a>
-          </div>
+            <div class="snapshot-grid">
+              <article class="snapshot-card">
+                <p class="snapshot-label">Pricing</p>
+                <p class="snapshot-value">{tool.tag}</p>
+              </article>
+              <article class="snapshot-card">
+                <p class="snapshot-label">Category</p>
+                <a href={category === 'all' ? '/' : `/${category}`} class="snapshot-value category-link">{category}</a>
+              </article>
+              <article class="snapshot-card">
+                <p class="snapshot-label">Added to directory</p>
+                <p class="snapshot-value">{formattedDate}</p>
+              </article>
+              <article class="snapshot-card">
+                <p class="snapshot-label">Official site</p>
+                {tool.url ? (
+                  <a href={tool.url} target="_blank" rel="noopener noreferrer" class="snapshot-value link-muted">{domain || tool.url}</a>
+                ) : (
+                  <p class="snapshot-value snapshot-value--muted">Not provided</p>
+                )}
+              </article>
+            </div>
+          </section>
+
+          <section class="tool-section tool-actions">
+            <div class="tool-detail-actions">
+              {tool.url ? (
+                <a href={tool.url} target="_blank" rel="noopener noreferrer" class="btn-primary">Visit {tool.title}</a>
+              ) : (
+                <span class="btn-primary btn-disabled" aria-disabled="true">No website listed</span>
+              )}
+              <p class="action-hint">{tool.url ? 'Opens in a new tab' : 'Add a URL to this listing to enable quick visits.'}</p>
+            </div>
+          </section>
+
+          {liveMetadata && (
+            <section class="tool-section live-section">
+              <header class="section-header">
+                <p class="section-eyebrow">Fetched from the tool</p>
+                <div>
+                  <h2 class="section-title">Live site signals</h2>
+                  <p class="section-subtitle">We grab metadata once during build to keep this modal instant.</p>
+                </div>
+              </header>
+
+              <div class="live-metadata-grid">
+                {hasBasicMetadata && liveMetadata && (
+                  <article class="live-group">
+                    <p class="live-group-label">Basic metadata</p>
+                    <div class="live-card-grid">
+                      {liveMetadata.basic.title && (
+                        <div class="live-card">
+                          <p class="live-label">Page title</p>
+                          <p class="live-value">{liveMetadata.basic.title}</p>
+                        </div>
+                      )}
+                      {liveMetadata.basic.description && (
+                        <div class="live-card">
+                          <p class="live-label">Description</p>
+                          <p class="live-value">{liveMetadata.basic.description}</p>
+                        </div>
+                      )}
+                      {liveMetadata.basic.canonicalUrl && (
+                        <div class="live-card">
+                          <p class="live-label">Canonical URL</p>
+                          <a href={liveMetadata.basic.canonicalUrl} target="_blank" rel="noopener noreferrer" class="live-link">{liveMetadata.basic.canonicalUrl}</a>
+                        </div>
+                      )}
+                      {liveMetadata.basic.favicon && (
+                        <div class="live-card live-card-inline">
+                          <p class="live-label">Favicon</p>
+                          <div class="favicon-preview">
+                            <img src={liveMetadata.basic.favicon} alt={`${tool.title} favicon`} loading="lazy" width="32" height="32" />
+                            <span>{extractDomain(liveMetadata.basic.canonicalUrl || tool.url || '') || domain}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )}
+
+                {hasOpenGraphMetadata && liveMetadata && (
+                  <article class="live-group">
+                    <p class="live-group-label">Open Graph & social</p>
+                    <div class="live-card-grid">
+                      {liveMetadata.openGraph.title && (
+                        <div class="live-card">
+                          <p class="live-label">OG title</p>
+                          <p class="live-value">{liveMetadata.openGraph.title}</p>
+                        </div>
+                      )}
+                      {liveMetadata.openGraph.description && (
+                        <div class="live-card">
+                          <p class="live-label">OG description</p>
+                          <p class="live-value">{liveMetadata.openGraph.description}</p>
+                        </div>
+                      )}
+                      {liveMetadata.openGraph.type && (
+                        <div class="live-card">
+                          <p class="live-label">OG type</p>
+                          <p class="live-value">{liveMetadata.openGraph.type}</p>
+                        </div>
+                      )}
+                      {liveMetadata.openGraph.siteName && (
+                        <div class="live-card">
+                          <p class="live-label">Site name</p>
+                          <p class="live-value">{liveMetadata.openGraph.siteName}</p>
+                        </div>
+                      )}
+                      {liveMetadata.openGraph.image && (
+                        <div class="live-card live-card-image">
+                          <p class="live-label">OG image</p>
+                          <img src={liveMetadata.openGraph.image} alt={`${tool.title} Open Graph image`} loading="lazy" />
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )}
+
+                {hasBrandMetadata && liveMetadata && (
+                  <article class="live-group">
+                    <p class="live-group-label">Contact & brand</p>
+                    <div class="live-card-grid">
+                      {(liveMetadata.brand.author || liveMetadata.brand.twitterHandle) && (
+                        <div class="live-card">
+                          <p class="live-label">Brand details</p>
+                          <ul class="list-pills">
+                            {liveMetadata.brand.author && <li>{liveMetadata.brand.author}</li>}
+                            {liveMetadata.brand.twitterHandle && <li>{liveMetadata.brand.twitterHandle}</li>}
+                          </ul>
+                        </div>
+                      )}
+                      {liveMetadata.brand.emails.length > 0 && (
+                        <div class="live-card">
+                          <p class="live-label">Email</p>
+                          <ul class="list-pills">
+                            {liveMetadata.brand.emails.map((email) => (
+                              <li><a href={`mailto:${email}`} class="live-link">{email}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {liveMetadata.brand.phones.length > 0 && (
+                        <div class="live-card">
+                          <p class="live-label">Phone</p>
+                          <ul class="list-pills">
+                            {liveMetadata.brand.phones.map((phone) => (
+                              <li><a href={`tel:${phone}`} class="live-link">{phone}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {liveMetadata.brand.contactUrls.length > 0 && (
+                        <div class="live-card">
+                          <p class="live-label">Contact links</p>
+                          <ul class="list-pills">
+                            {liveMetadata.brand.contactUrls.map((link) => (
+                              <li><a href={link} target="_blank" rel="noopener noreferrer" class="live-link">{extractDomain(link) || link}</a></li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )}
+
+                {hasExtraMetadata && liveMetadata && (
+                  <article class="live-group">
+                    <p class="live-group-label">Instant extras</p>
+                    <div class="live-card-grid">
+                      {liveMetadata.extras.themeColor && (
+                        <div class="live-card">
+                          <p class="live-label">Theme color</p>
+                          <div class="theme-chip">
+                            <span class="color-dot" style={`background-color: ${liveMetadata.extras.themeColor};`}></span>
+                            <span class="live-value">{liveMetadata.extras.themeColor}</span>
+                          </div>
+                        </div>
+                      )}
+                      {liveMetadata.extras.applicationName && (
+                        <div class="live-card">
+                          <p class="live-label">App name</p>
+                          <p class="live-value">{liveMetadata.extras.applicationName}</p>
+                        </div>
+                      )}
+                      {liveMetadata.extras.twitterCard && (
+                        <div class="live-card">
+                          <p class="live-label">Twitter card</p>
+                          <p class="live-value">{liveMetadata.extras.twitterCard}</p>
+                        </div>
+                      )}
+                      {liveMetadata.extras.keywords && (
+                        <div class="live-card">
+                          <p class="live-label">Keywords</p>
+                          <p class="live-value">{liveMetadata.extras.keywords}</p>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                )}
+              </div>
+            </section>
+          )}
 
           <div class="tool-detail-share">
             <h3 class="share-title">Share this tool</h3>
@@ -205,7 +654,7 @@ const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
     .tool-detail-modal-backdrop {
       position: fixed;
       inset: 0;
-      background-color: rgba(0,0,0,0.85);
+      background-color: rgba(0,0,0,0.88);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -215,16 +664,24 @@ const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
     }
 
     .tool-detail-modal {
-      background-color: var(--background);
+      background-color: var(--background-secondary);
       border-radius: var(--spacing-03);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
       width: 100%;
       max-width: 680px;
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
       padding: var(--spacing-09);
-      border: 1px solid var(--border-muted);
+      background-color: var(--background-secondary);
+      --shadow-color: rgb(0 0 0 / 0.04);
+      box-shadow:
+        0px 0px 0px 0.5px var(--background-selected),
+        0px 1px 1px -0.5px var(--shadow-color),
+        0px 3px 3px -1.5px var(--shadow-color),
+        0px 12px 12px -6px var(--shadow-color);
+      content-visibility: auto;
+      contain-intrinsic-size: 8.5rem;
+      transition: box-shadow 0.2s ease-out;
     }
 
     .tool-detail-close-btn { position: absolute; top: var(--spacing-06); right: var(--spacing-06); background: none; border: none; cursor: pointer; color: var(--content-secondary); width: var(--spacing-09); height: var(--spacing-09); display:flex; align-items:center; justify-content:center; border-radius:var(--spacing-02); }
@@ -236,14 +693,53 @@ const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
     .tool-domain { margin:0; color: var(--content-secondary-alt); }
 
     .tool-detail-content { display:flex; flex-direction:column; gap: var(--spacing-08); }
+    .tool-summary { display:flex; flex-direction:column; gap: var(--spacing-03); padding: var(--spacing-05); background-color: var(--background-secondary); border-radius: var(--spacing-02); border: 1px solid var(--border-muted); }
     .tool-description { margin:0; color: var(--content-primary); }
-    .tool-metadata-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-04); padding: var(--spacing-05); background-color: var(--background-secondary); border-radius: var(--spacing-02); }
-    .metadata-label { font-size: var(--desktop-caption); color: var(--content-secondary-alt); text-transform: uppercase; }
-    .metadata-value { color: var(--content-primary); font-weight:500 }
-    .category-link { color: var(--accent); }
+    .summary-meta { display:flex; flex-direction:column; gap: var(--spacing-01); }
+    .summary-label { font-size: var(--desktop-caption); color: var(--content-secondary-alt); text-transform: uppercase; }
+    .summary-value { color: var(--accent); text-decoration:none; font-weight:600; }
+    .summary-value:hover { text-decoration:underline; }
+    .summary-value--muted { color: var(--content-secondary); text-decoration:none; }
 
-    .tool-detail-placeholder { padding: var(--spacing-05); background-color: var(--background-secondary); border-left: 3px solid var(--accent); border-radius: var(--spacing-02); }
-    .btn-primary { display:inline-block; padding: var(--spacing-04) var(--spacing-05); background-color: var(--accent); color:white; border-radius: var(--spacing-02); text-decoration:none; font-weight:600 }
+    .tool-section { display:flex; flex-direction:column; gap: var(--spacing-05); padding: var(--spacing-06); border: 1px solid var(--border-muted); border-radius: var(--spacing-03); background-color: var(--background-primary, var(--background-secondary)); }
+    .section-header { display:flex; gap: var(--spacing-05); align-items:flex-start; }
+    .section-eyebrow { margin:0; font-size: var(--desktop-caption); color: var(--content-secondary-alt); text-transform: uppercase; letter-spacing: 0.08em; }
+    .section-title { margin:0; font-size: var(--desktop-h5); color: var(--content-primary); }
+    .section-subtitle { margin: var(--spacing-01) 0 0 0; color: var(--content-secondary); }
+
+    .snapshot-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--spacing-04); }
+    .snapshot-card { padding: var(--spacing-04); border-radius: var(--spacing-02); background-color: var(--background-secondary); border:1px solid var(--border-muted); display:flex; flex-direction:column; gap: var(--spacing-01); }
+    .snapshot-label { margin:0; font-size: var(--desktop-caption); color: var(--content-secondary-alt); text-transform: uppercase; }
+    .snapshot-value { margin:0; color: var(--content-primary); font-weight:600; }
+    .snapshot-value--muted { color: var(--content-secondary); font-weight:500; }
+    .category-link { color: var(--accent); text-decoration:none; }
+    .category-link:hover { text-decoration:underline; }
+    .link-muted { color: var(--content-secondary); text-decoration:none; }
+    .link-muted:hover { color: var(--accent); }
+
+    .tool-detail-actions { display:flex; flex-direction:column; gap: var(--spacing-02); }
+    .btn-primary { display:inline-block; padding: var(--spacing-04) var(--spacing-05); background-color: var(--accent); color:white; border-radius: var(--spacing-02); text-decoration:none; font-weight:600; text-align:center; }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events:none; }
+    .action-hint { margin:0; color: var(--content-secondary); font-size: var(--desktop-caption); }
+
+    .live-section { background-color: var(--background-secondary); border-color: var(--border-muted); }
+    .live-metadata-grid { display:flex; flex-direction:column; gap: var(--spacing-05); }
+    .live-group { border:1px solid var(--border-muted); border-radius: var(--spacing-03); padding: var(--spacing-05); background-color: var(--background-primary, var(--background-secondary)); }
+    .live-group-label { margin:0 0 var(--spacing-03) 0; font-size: var(--desktop-caption); color: var(--content-secondary-alt); text-transform: uppercase; letter-spacing:0.08em; }
+    .live-card-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--spacing-04); }
+    .live-card { padding: var(--spacing-04); border-radius: var(--spacing-02); background-color: var(--background-secondary); border: 1px solid var(--border-muted); display:flex; flex-direction:column; gap: var(--spacing-02); }
+    .live-card-inline .favicon-preview { display:flex; align-items:center; gap: var(--spacing-03); }
+    .live-card-image img { width:100%; border-radius: var(--spacing-02); border:1px solid var(--border-muted); object-fit:cover; }
+    .live-label { margin:0; font-size: var(--desktop-caption); text-transform: uppercase; color: var(--content-secondary-alt); }
+    .live-value { margin:0; color: var(--content-primary); font-weight:500; }
+    .live-link { color: var(--accent); word-break: break-all; text-decoration:none; }
+    .live-link:hover { text-decoration:underline; }
+    .favicon-preview img { border-radius: var(--spacing-02); border:1px solid var(--border-muted); }
+    .list-pills { list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap: var(--spacing-02); }
+    .list-pills li { background-color: var(--background-secondary); border-radius: var(--spacing-02); padding: 2px var(--spacing-03); font-size: var(--desktop-caption); color: var(--content-secondary); }
+    .theme-chip { display:flex; align-items:center; gap: var(--spacing-03); }
+    .color-dot { width:16px; height:16px; border-radius:999px; border:1px solid var(--border-muted); display:inline-flex; }
 
     .share-buttons { display:flex; gap: var(--spacing-03); }
     .share-btn { width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius: var(--spacing-02); background-color: var(--background-secondary); border:1px solid var(--border-muted); color:var(--content-secondary); }
@@ -251,8 +747,14 @@ const pageDescription = `${tool.title}: ${tool.body} | ${tool.tag}`;
 
     .tool-detail-nav { padding-top: var(--spacing-05); border-top: 1px solid var(--border-muted); display:flex; gap: var(--spacing-03); }
     .nav-link { color: var(--content-secondary); }
+    .share-title{ color: var(--content-secondary); font-size: var(--desktop-caption); text-transform: uppercase; }
 
-    @media (max-width: 768px) { .tool-detail-modal { padding: var(--spacing-06); margin: var(--spacing-05); } .tool-icon { width:48px; height:48px } }
+    @media (max-width: 768px) {
+      .tool-detail-modal { padding: var(--spacing-06); margin: var(--spacing-05); }
+      .tool-icon { width:48px; height:48px }
+      .section-header { flex-direction:column; }
+      .tool-section { padding: var(--spacing-05); }
+    }
   </style>
 
 </Layout>
