@@ -381,14 +381,6 @@ async function fetchExternalMetadata(targetUrl: string): Promise<MetadataBlock> 
                           <p class="live-value">{liveMetadata.basic.description}</p>
                         </div>
                       )}
-                      {liveMetadata.basic.favicon && (
-                        <div class="live-card live-card-inline">
-                          <p class="live-label">Favicon</p>
-                          <div class="favicon-preview">
-                            <img src={liveMetadata.basic.favicon} alt={`${tool.title} favicon`} loading="lazy" width="32" height="32" />
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </article>
                 )}
@@ -832,6 +824,7 @@ async function fetchExternalMetadata(targetUrl: string): Promise<MetadataBlock> 
 
     .live-metadata-grid {
       display: flex;
+      flex-wrap: wrap;
       gap: var(--spacing-05);
     }
 
@@ -848,7 +841,6 @@ async function fetchExternalMetadata(targetUrl: string): Promise<MetadataBlock> 
 
     .live-card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: var(--spacing-06);
     }
 
