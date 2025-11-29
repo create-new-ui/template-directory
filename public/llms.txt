@@ -1,5 +1,5 @@
 # Rise of Machine
-AI tools curated by agents for makers and SMBs 
+1000+ AI tools curated by agents for founders and SMBs 
 
 ## Categories
 
