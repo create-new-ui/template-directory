@@ -19,18 +19,19 @@ async function fetchMetadata(tool) {
     const url = tool.url;
     if (!url) return null;
 
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
+    try {
         const response = await fetch(url, {
             headers: { "User-Agent": USER_AGENT },
             signal: controller.signal,
         });
 
-        clearTimeout(timeoutId);
-
         if (!response.ok) return null;
+
+        const contentType = response.headers.get("content-type");
+        if (contentType && !contentType.includes("text/html")) return null;
 
         const html = await response.text();
         const root = parse(html);
@@ -43,11 +44,6 @@ async function fetchMetadata(tool) {
             root.querySelector('meta[name="description"]')?.getAttribute('content')?.trim() ||
             root.querySelector('meta[property="og:description"]')?.getAttribute('content')?.trim();
 
-        // Simple favicon fallback - we won't deep crawl for icons to save time, 
-        // relying on Google's favicon service in the UI as a backup is usually better/faster,
-        // but we'll grab the canonical link if present.
-        const canonical = root.querySelector('link[rel="canonical"]')?.getAttribute('href')?.trim();
-
         // Only return if we actually found something useful to augment tools.json
         if (!title && !description) return null;
 
@@ -55,12 +51,13 @@ async function fetchMetadata(tool) {
             slug: tool.slug,
             title: title || undefined,
             description: description || undefined,
-            // We aren't storing favicon locally to keep JSON size down; UI uses Google service + domain 
         };
 
     } catch (err) {
         // console.log(`Failed to fetch ${url}: ${err.message}`);
         return null;
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 
