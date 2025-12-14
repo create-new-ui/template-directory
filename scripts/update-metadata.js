@@ -76,16 +76,31 @@ async function main() {
     // But 1000 requests is still slow. Let's do a fresh fetch but show progress.
 
     let completed = 0;
-    const results = {};
+    let existingMetadata = {};
+    if (fs.existsSync(metadataPath)) {
+        try {
+            existingMetadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
+        } catch (e) { console.log("Could not read existing metadata, starting fresh."); }
+    }
 
-    // Chunk array for concurrency
+    // Initialize results with existing data so we don't lose it
+    const results = { ...existingMetadata };
+
     for (let i = 0; i < allTools.length; i += CONCURRENCY_LIMIT) {
         const chunk = allTools.slice(i, i + CONCURRENCY_LIMIT);
-        const promises = chunk.map(tool => fetchMetadata(tool).then(res => {
-            completed++;
-            if (completed % 50 === 0) process.stdout.write(`\rProgress: ${completed}/${allTools.length}`);
-            if (res) results[res.slug] = res;
-        }));
+        const promises = chunk.map(tool => {
+            // Check if we already have valid metadata for this slug
+            if (existingMetadata[tool.slug] && existingMetadata[tool.slug].title) {
+                completed++;
+                return Promise.resolve();
+            }
+
+            return fetchMetadata(tool).then(res => {
+                completed++;
+                if (completed % 50 === 0) process.stdout.write(`\rProgress: ${completed}/${allTools.length}`);
+                if (res) results[res.slug] = res;
+            });
+        });
 
         await Promise.all(promises);
     }

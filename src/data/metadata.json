@@ -4516,5 +4516,145 @@
     "slug": "fluxaicreate",
     "title": "Flux AI Image, Video&Kontext Generator | All-in-One creation | AI图片生成器",
     "description": "Unlock your creative potential with Flux AI. Generate  images, videos, and content from text using advanced AI. Fast, intuitive, and totally free to start."
+  },
+  "lora-pro": {
+    "slug": "lora-pro",
+    "title": "Get your best AI Tools | Open-source LoraAI Tools Directory",
+    "description": "LoraAI Directory is a tool provides free AI Tools Directory. Get your favorite AI tools with LoraAI Directory, LoraAI Directory aims to collect all the AI tools and provide the best for users."
+  },
+  "meshy": {
+    "slug": "meshy",
+    "title": "Meshy AI - The #1 AI 3D Model Generator",
+    "description": "Create production-ready 3D models from text and images in seconds with our free AI 3D model generator. Perfect for 3D artists, game developers, and creators!"
+  },
+  "decktopus": {
+    "slug": "decktopus",
+    "title": "Decktopus AI | Make presentations with AI | AI Presentation Assistant",
+    "description": "Decktopus is an AI presentation maker, that will create amazing presentations in seconds. You only need to type the presentation title and your presentation is ready."
+  },
+  "meet-ting": {
+    "slug": "meet-ting",
+    "title": "Meet-Ting",
+    "description": "Meet-Ting is a free AI scheduling assistant that books meetings from email and text, no apps, no links. Just CC Ting to check calendars, follow up, and send invites."
+  },
+  "koncile": {
+    "slug": "koncile",
+    "title": "Koncile｜OCR IA - Captez toute information dans vos documents",
+    "description": "Transformez vos PDF et images en données exploitables avec notre OCR IA. Parfait pour factures, devis, contrats et documents d'identité."
+  },
+  "shipsquad": {
+    "slug": "shipsquad",
+    "title": "ShipSquad - Connect Creators & SaaS Founders",
+    "description": "The premier platform for collaborations between creators and SaaS owners. Discover, vote, and connect with the best SaaS applications."
+  },
+  "aisareegenerator-com": {
+    "slug": "aisareegenerator-com",
+    "title": "AI Saree Generator - Change Your Photo To Vintage Saree Images with Nano Banana Model",
+    "description": "Transform your photos into stunning vintage saree images with AI Saree Generator. Use nano banana AI model to edit and change your photos into traditional Indian saree designs. Free online saree changer tool for vintage saree creation."
+  },
+  "flux2ai-org": {
+    "slug": "flux2ai-org",
+    "title": "Flux 2 AI Image Generator - Text to Image, Multi Image Workflows | Flux.2",
+    "description": "Flux ai image generator powered by Flux.2 delivers text to image, image editing, and multi image workflows. Flux 2 understands prompts, merges references, and produces consistent visuals with Flux.2 AI technology. Create faster with Flux 2 - supports batch reference and versatile styles."
+  },
+  "nanobananaimage-me": {
+    "slug": "nanobananaimage-me",
+    "title": "Nano Banana AI Image Generator – Create Stunning Images with Nano Banana Pro | AI图片生成器",
+    "description": "Nano Banana makes AI image generation easy, fast, and fun.describe your vision and let Nano Banana turn it into reality. Start for free at nanobananaimage.me."
+  },
+  "magicpatterns-com": {
+    "slug": "magicpatterns-com",
+    "title": "Magic Patterns",
+    "description": "AI design tool to go from idea to production - prompt ideas to life, use your existing styles, and collaborate with your team."
+  },
+  "fastimage-ai": {
+    "slug": "fastimage-ai",
+    "title": "Fast Image AI - Free Online Convert Image to Any Style",
+    "description": "Transform your photos with Fast Image AI into stunning Ghibli and Sketch styles.  One-click style control delivers amazing AI art instantly."
+  },
+  "4kupscaler-com": {
+    "slug": "4kupscaler-com",
+    "title": "Free AI Video Converter - Convert Videos from 720p, 1080p to 4K in Seconds Online",
+    "description": "Video converter simplifies video editing—convert video to 4K with one click. Achieve flawless videos effortlessly."
+  },
+  "viralrot-com": {
+    "slug": "viralrot-com",
+    "title": "ViralRot · Brainrot Video Generator",
+    "description": "ViralRot is the fastest way to create Brainrot / Subway Surfers style short-form videos with multimodal AI."
+  },
+  "fastimageai": {
+    "slug": "fastimageai",
+    "title": "Fast Image AI - Free Online Convert Image to Any Style",
+    "description": "Transform your photos with Fast Image AI into stunning Ghibli and Sketch styles.  One-click style control delivers amazing AI art instantly."
+  },
+  "nanobananaimageme": {
+    "slug": "nanobananaimageme",
+    "title": "Nano Banana AI Image Generator – Create Stunning Images with Nano Banana Pro | AI图片生成器",
+    "description": "Nano Banana makes AI image generation easy, fast, and fun.describe your vision and let Nano Banana turn it into reality. Start for free at nanobananaimage.me."
+  },
+  "flux2aiorg": {
+    "slug": "flux2aiorg",
+    "title": "Flux 2 AI Image Generator - Text to Image, Multi Image Workflows | Flux.2",
+    "description": "Flux ai image generator powered by Flux.2 delivers text to image, image editing, and multi image workflows. Flux 2 understands prompts, merges references, and produces consistent visuals with Flux.2 AI technology. Create faster with Flux 2 - supports batch reference and versatile styles."
+  },
+  "magicpatternscom": {
+    "slug": "magicpatternscom",
+    "title": "Magic Patterns",
+    "description": "AI design tool to go from idea to production - prompt ideas to life, use your existing styles, and collaborate with your team."
+  },
+  "aisareegeneratorcom": {
+    "slug": "aisareegeneratorcom",
+    "title": "AI Saree Generator - Change Your Photo To Vintage Saree Images with Nano Banana Model",
+    "description": "Transform your photos into stunning vintage saree images with AI Saree Generator. Use nano banana AI model to edit and change your photos into traditional Indian saree designs. Free online saree changer tool for vintage saree creation."
+  },
+  "4kupscalercom": {
+    "slug": "4kupscalercom",
+    "title": "Free AI Video Converter - Convert Videos from 720p, 1080p to 4K in Seconds Online",
+    "description": "Video converter simplifies video editing—convert video to 4K with one click. Achieve flawless videos effortlessly."
+  },
+  "remio-note-taker": {
+    "slug": "remio-note-taker",
+    "title": "remio | AI Assistant Powered by Your Experience",
+    "description": "remio is the next-gen AI productivity assistant,designed to revolutionize the way users capture, organize, and utilize information."
+  },
+  "viralrotcom": {
+    "slug": "viralrotcom",
+    "title": "ViralRot · Brainrot Video Generator",
+    "description": "ViralRot is the fastest way to create Brainrot / Subway Surfers style short-form videos with multimodal AI."
+  },
+  "fastimage": {
+    "slug": "fastimage",
+    "title": "Fast Image AI - Free Online Convert Image to Any Style",
+    "description": "Transform your photos with Fast Image AI into stunning Ghibli and Sketch styles.  One-click style control delivers amazing AI art instantly."
+  },
+  "nanobananaimage": {
+    "slug": "nanobananaimage",
+    "title": "Nano Banana AI Image Generator – Create Stunning Images with Nano Banana Pro | AI图片生成器",
+    "description": "Nano Banana makes AI image generation easy, fast, and fun.describe your vision and let Nano Banana turn it into reality. Start for free at nanobananaimage.me."
+  },
+  "flux2ai": {
+    "slug": "flux2ai",
+    "title": "Flux 2 AI Image Generator - Text to Image, Multi Image Workflows | Flux.2",
+    "description": "Flux ai image generator powered by Flux.2 delivers text to image, image editing, and multi image workflows. Flux 2 understands prompts, merges references, and produces consistent visuals with Flux.2 AI technology. Create faster with Flux 2 - supports batch reference and versatile styles."
+  },
+  "magicpatterns": {
+    "slug": "magicpatterns",
+    "title": "Magic Patterns",
+    "description": "AI design tool to go from idea to production - prompt ideas to life, use your existing styles, and collaborate with your team."
+  },
+  "ai-sareegenerator": {
+    "slug": "ai-sareegenerator",
+    "title": "AI Saree Generator - Change Your Photo To Vintage Saree Images with Nano Banana Model",
+    "description": "Transform your photos into stunning vintage saree images with AI Saree Generator. Use nano banana AI model to edit and change your photos into traditional Indian saree designs. Free online saree changer tool for vintage saree creation."
+  },
+  "upscaler": {
+    "slug": "upscaler",
+    "title": "Free AI Video Converter - Convert Videos from 720p, 1080p to 4K in Seconds Online",
+    "description": "Video converter simplifies video editing—convert video to 4K with one click. Achieve flawless videos effortlessly."
+  },
+  "viralrot": {
+    "slug": "viralrot",
+    "title": "ViralRot · Brainrot Video Generator",
+    "description": "ViralRot is the fastest way to create Brainrot / Subway Surfers style short-form videos with multimodal AI."
   }
 }
