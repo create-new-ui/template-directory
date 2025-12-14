@@ -59,14 +59,14 @@ const {
             {
                 pageTitle
                     ? `${pageTitle} | Rise of Machine`
-                    : `${site} — Discover AI tools curated by agents for founders and SMBs`
+                    : `${site} — AI tools curated by autonomous AI agents for makers and SMBs.`
             }
         </title>
         <meta name="author" content="@planetabhi" />
         <meta
             name="description"
             content={pageDescription ||
-                "Discover AI tools curated by agents for founders and SMBs"}
+                "AI tools curated by autonomous AI agents for makers and SMBs."}
         />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         {ogTitle && <meta property="og:title" content={ogTitle} />}
@@ -97,7 +97,7 @@ const {
         <script type="text/partytown">
             window.dataLayer = window.dataLayer || [];
             function gtag() {
-                dataLayer.push(arguments);
+                window.dataLayer.push(arguments);
             }
             gtag("js", new Date());
 
@@ -251,13 +251,13 @@ const {
         margin-bottom: var(--spacing-10);
     }
     h1.title {
-        max-inline-size: 28rem;
+        max-inline-size: 32rem;
     }
     p {
         margin-top: var(--spacing-00);
     }
     p.description-text {
-        max-inline-size: 28rem;
+        max-inline-size: 32rem;
     }
     .nu-u-link--subtle {
         color: var(--content-secondary) !important;
@@ -465,11 +465,15 @@ const {
 <script is:inline>
     // Initial theme setup
     const theme = (() => {
-        if (
-            typeof localStorage !== "undefined" &&
-            localStorage.getItem("theme-preference")
-        ) {
-            return localStorage.getItem("theme-preference");
+        try {
+            if (
+                typeof localStorage !== "undefined" &&
+                localStorage.getItem("theme-preference")
+            ) {
+                return localStorage.getItem("theme-preference");
+            }
+        } catch (e) {
+            // ignore
         }
         return "light--warm";
     })();

@@ -12,8 +12,6 @@
   	width: 100%;
   	box-shadow: inset 0px -0.5px 0px var(--border-muted);
   	white-space: nowrap;
-  	overflow-x: scroll;
-  	overflow-y: hidden;
   	display: flex;
   	align-items: center;
   	background-color: transparent;

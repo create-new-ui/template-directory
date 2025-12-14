@@ -13,9 +13,7 @@ const CONCURRENCY_LIMIT = 25;
 const TIMEOUT_MS = 6000;
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
-function extractDomain(url) {
-    try { return new URL(url).hostname; } catch { return null; }
-}
+
 
 async function fetchMetadata(tool) {
     const url = tool.url;

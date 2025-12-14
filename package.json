@@ -1,7 +1,7 @@
 {
   "name": "riseofmachine",
   "version": "3.1.1",
-  "description": "Discover AI tools curated by agents for founders and SMBs.",
+  "description": "AI tools curated by autonomous AI agents for makers and SMBs.",
   "type": "module",
   "private": false,
   "main": "src/data/tools.json",
