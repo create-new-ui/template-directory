@@ -222,16 +222,16 @@ const {
         -moz-osx-font-smoothing: grayscale;
     }
     html[data-new-ui-theme*="dark"] {
-        --link: #f55000;
-        --link-hover: #f55000;
-        --link-visited: #f55000;
-        --border-focus: #f55000;
+        --link: orange;
+        --link-hover: orange;
+        --link-visited: orange;
+        --border-focus: orange;
     }
     html[data-new-ui-theme*="light"] {
-        --link: #f55000;
-        --link-hover: #f55000;
-        --link-visited: #f55000;
-        --border-focus: #f55000;
+        --link: blue;
+        --link-hover: blue;
+        --link-visited: blue;
+        --border-focus: blue;
     }
     html {
         font-family: var(--body-copy);
@@ -471,9 +471,7 @@ const {
         ) {
             return localStorage.getItem("theme-preference");
         }
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark--warm"
-            : "light--warm";
+        return "light--warm";
     })();
     document.firstElementChild.setAttribute("data-new-ui-theme", theme);
 
@@ -506,20 +504,6 @@ const {
         }
         initThemeToggle();
     });
-
-    // If user hasn't set a preference
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", ({ matches: isDark }) => {
-            // Only apply system preference if user hasn't manually chosen a theme
-            if (!localStorage.getItem("theme-preference")) {
-                const newTheme = isDark ? "dark--warm" : "light--warm";
-                document.firstElementChild.setAttribute(
-                    "data-new-ui-theme",
-                    newTheme,
-                );
-            }
-        });
 
     initThemeToggle();
 </script>

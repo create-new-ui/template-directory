@@ -21,7 +21,7 @@
     width: 100%;
     text-decoration: none;
     padding: 0.8rem 1.2rem;
-    color: var(--content-primary);
+    color: var(--accent);
     justify-content: space-between;
 }
 

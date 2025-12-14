@@ -354,8 +354,6 @@ const redditShareUrl = `https://www.reddit.com/submit?url=${encodedCanonicalUrl}
   </script>
 
   <style is:global>
-    /* Inherit fonts and base styles from Layout and foundations */
-    /* When a modal detail page is open, hide the page title + description behind it */
     body[data-modal-open="true"] .title,
     body[data-modal-open="true"] .description-text {
       opacity: 0 !important;
@@ -583,7 +581,7 @@ const redditShareUrl = `https://www.reddit.com/submit?url=${encodedCanonicalUrl}
       display: inline-block;
       padding: var(--spacing-03) var(--spacing-05);
       background-color: var(--accent);
-      color: white;
+      color: var(--background-high-contrast);
       text-decoration: none;
       font-weight: 600;
       text-align: center;
