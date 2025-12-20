@@ -101,6 +101,14 @@
           "slug": "colorpageai"
         },
         {
+          "title": "ComicsAI",
+          "body": "AI Comic Generator. Transform your stories into comics with AI.",
+          "tag": "Free",
+          "url": "https://comicsai.org?ref=riseofmachine.com",
+          "date-added": "2025-12-20",
+          "slug": "comicsai"
+        },
+        {
           "title": "Comfy",
           "body": "A powerful node-based generative AI tool.",
           "tag": "Free",
