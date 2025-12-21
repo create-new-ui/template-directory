@@ -349,6 +349,14 @@
           "slug": "imgnai"
         },
         {
+          "title": "Image to Prompt",
+          "body": "Generate detailed AI art prompts from images for Midjourney & SD.",
+          "tag": "Freemium",
+          "url": "https://image2prompts.com?ref=riseofmachine.com",
+          "date-added": "2025-12-21",
+          "slug": "image-to-prompt"
+        },
+        {
           "title": "Infinite Craft Guide",
           "body": "Learn recipes and strategies for Infinite Craft.",
           "tag": "Free",
@@ -685,6 +693,14 @@
       "category": "audio",
       "content": [
         {
+          "title": "ReelScribe",
+          "body": "Accurate AI audio and video transcription tool.",
+          "tag": "Freemium",
+          "url": "https://reelscribe.ai?ref=riseofmachine.com",
+          "date-added": "2025-12-21",
+          "slug": "reelscribe"
+        },
+        {
           "title": "Adtwin",
           "body": "AI platform for audio ad creation and tracking.",
           "url": "https://adtwin.ai/?ref=riseofmachine.com",
@@ -884,14 +900,6 @@
           "tag": "Freemium",
           "date-added": "2025-07-31",
           "slug": "openwispr"
-        },
-        {
-          "title": "Phasmophobia Sound Recorder",
-          "body": "Record, share and download terrifying sounds.",
-          "tag": "Free",
-          "url": "https://www.phasmophobiasoundrecorder.com/?ref=riseofmachine.com",
-          "date-added": "2025-10-03",
-          "slug": "phasmophobia-sound-recorder"
         },
         {
           "title": "Phone App",
@@ -2192,6 +2200,14 @@
       "title": "Developer",
       "category": "developer",
       "content": [
+        {
+          "title": "ChatGPT Apps SDK",
+          "body": "Build and monetize apps for the ChatGPT marketplace.",
+          "tag": "Free",
+          "url": "https://chatgpt-app.net?ref=riseofmachine.com",
+          "date-added": "2025-12-21",
+          "slug": "chatgpt-apps-sdk"
+        },
         {
           "title": "AI SDK 5 by Vercel",
           "body": "The AI toolkit for TypeScript.",
@@ -7755,6 +7771,14 @@
           "slug": "wan-22"
         },
         {
+          "title": "Wan 2.6",
+          "body": "AI video generator for multi-shot storytelling and syncing.",
+          "tag": "Freemium",
+          "url": "https://wan2-6.org?ref=riseofmachine.com",
+          "date-added": "2025-12-21",
+          "slug": "wan-26"
+        },
+        {
           "title": "Wan 2.2 AI",
           "body": "Professional AI platform for video generation.",
           "url": "https://wan22.ai/?ref=riseofmachine.com",
@@ -8272,6 +8296,14 @@
           "date-added": "2025-08-24",
           "category": "Productivity",
           "slug": "trace"
+        },
+        {
+          "title": "Track 3I/ATLAS",
+          "body": "Track Comet 3I/ATLAS, rare interstellar visitor, in real-time.",
+          "tag": "Free",
+          "url": "https://3i-atlas.net?ref=riseofmachine.com",
+          "date-added": "2025-12-21",
+          "slug": "track-3iatlas"
         },
         {
           "title": "TraceRoot",

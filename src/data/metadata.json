@@ -4675,5 +4675,55 @@
     "slug": "sora-2",
     "title": "Free AI Video Generator - Sora 2 | No Sign Up Required",
     "description": "Create realistic AI videos with synchronized audio instantly. Physics-accurate motion, cinematic quality. 10 free credits, no credit card needed. Try Sora 2 now!"
+  },
+  "comicsai": {
+    "slug": "comicsai",
+    "title": "ComicsAI - #1 Free AI Comic Factory & AI Comics Generator",
+    "description": "Create stunning anime comics with the best AI Comic Factory. Free AI Comics Generator that transforms your stories into manga & anime-style art in minutes. No drawing skills required."
+  },
+  "image2prompts": {
+    "slug": "image2prompts",
+    "title": "Image to Prompt: Free AI Prompt Generator for Midjourney & SD",
+    "description": "Free AI-powered image to prompt generator. Upload images and get detailed prompts for AI art generation with our advanced converter."
+  },
+  "reelscribe": {
+    "slug": "reelscribe",
+    "title": "Free Transcribe Audio to Text & Video to text | ReelScribe",
+    "description": "Transcribe videos and audio to text instantly with ReelScribe – the fast, accurate, and unlimited AI transcription tool. Convert MP4, MP3, or any video to text and subtitles in 145+ languages. 99.8% accuracy. Download transcripts as DOCX, PDF, TXT, or SRT. Start transcribing for free today!"
+  },
+  "chatgpt-app": {
+    "slug": "chatgpt-app",
+    "title": "ChatGPT APP - Build & Monetize Apps for ChatGPT",
+    "description": "Build powerful apps using the ChatGPT Apps SDK, submit to ChatGPT marketplace, and earn money when users engage with your creations"
+  },
+  "wan-2-6": {
+    "slug": "wan-2-6",
+    "title": "Wan 2.6 Video Generator | AI Multi-Shot Video with Sound",
+    "description": "Wan 2.6 makes 1080p videos from text, images, or short clips. It keeps shots, faces, and voices in sync for clear wan2.6 video stories."
+  },
+  "3i-atlas": {
+    "slug": "3i-atlas",
+    "title": "Track Comet 3I/ATLAS Live - Rare Interstellar Visitor",
+    "description": "Follow 3I/ATLAS, the third interstellar comet ever discovered! Get real-time tracking, observing guides, and witness this once-in-a-lifetime visitor from beyond our solar system."
+  },
+  "image-to-prompt": {
+    "slug": "image-to-prompt",
+    "title": "Image to Prompt: Free AI Prompt Generator for Midjourney & SD",
+    "description": "Free AI-powered image to prompt generator. Upload images and get detailed prompts for AI art generation with our advanced converter."
+  },
+  "chatgpt-apps-sdk": {
+    "slug": "chatgpt-apps-sdk",
+    "title": "ChatGPT APP - Build & Monetize Apps for ChatGPT",
+    "description": "Build powerful apps using the ChatGPT Apps SDK, submit to ChatGPT marketplace, and earn money when users engage with your creations"
+  },
+  "wan-26": {
+    "slug": "wan-26",
+    "title": "Wan 2.6 Video Generator | AI Multi-Shot Video with Sound",
+    "description": "Wan 2.6 makes 1080p videos from text, images, or short clips. It keeps shots, faces, and voices in sync for clear wan2.6 video stories."
+  },
+  "track-3iatlas": {
+    "slug": "track-3iatlas",
+    "title": "Track Comet 3I/ATLAS Live - Rare Interstellar Visitor",
+    "description": "Follow 3I/ATLAS, the third interstellar comet ever discovered! Get real-time tracking, observing guides, and witness this once-in-a-lifetime visitor from beyond our solar system."
   }
 }
