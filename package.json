@@ -24,6 +24,7 @@
     "add-slugs": "bun run scripts/add-slugs.ts",
     "clean": "rm -rf dist .astro src/data/slug-map.json src/data/tool-metadata",
     "prepare-data": "bun run add-slugs && bun run scripts/split-data.ts && bun run scripts/generate-slug-map.ts && bun run scripts/generate-tool-metadata.ts",
+    "prepublishOnly": "bun run prepare-data",
     "dev": "bun run prepare-data && astro dev",
     "start": "astro dev",
     "build": "bun run prepare-data && astro build",
