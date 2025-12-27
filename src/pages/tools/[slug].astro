@@ -1,23 +1,16 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import slugMap from "../../data/slug-map.json";
-import metadata from "../../data/metadata.json";
 import "@new-ui/foundations";
 import SoftwareApplicationSchema from "../../components/schema/SoftwareApplicationSchema.astro";
 import BreadcrumbSchema from "../../components/schema/BreadcrumbSchema.astro";
 
 export async function getStaticPaths() {
-  // Import tools.json only for build-time path generation
-  const data = await import("../../data/tools.json");
-  const paths: any[] = [];
-
-  data.default.tools.forEach((category: any) => {
-    category.content.forEach((tool: any) => {
-      if (tool.slug) {
-        paths.push({ params: { slug: tool.slug } });
-      }
-    });
-  });
+  // Use slug-map for efficient path generation (no need to load full tools.json)
+  const slugMapData = await import("../../data/slug-map.json");
+  const paths = Object.keys(slugMapData.default).map((slug) => ({
+    params: { slug },
+  }));
 
   return paths;
 }
@@ -68,11 +61,19 @@ function formatDate(dateStr: string) {
 const domain = extractDomain(tool.url || "");
 const formattedDate = formatDate(tool["date-added"]);
 const canonicalUrl = `https://riseofmachine.com/tools/${tool.slug}`;
-const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
+// Use self-hosted favicon from public folder (eliminates third-party Google requests)
+const faviconUrl = `/favicons/${slug}.png`;
 const fallbackPath = category === "all" ? "/" : `/${category}`;
 
-// Get pre-fetched metadata if available
-const meta = (metadata as any)[slug] || {};
+// Dynamically import per-tool metadata (lightweight ~0.4KB file)
+let meta: any = {};
+try {
+  const toolMetadata = await import(`../../data/tool-metadata/${slug}.json`);
+  meta = toolMetadata.default;
+} catch (e) {
+  // Fallback to tool data if metadata file doesn't exist
+  console.warn(`No metadata file for ${slug}, using tool data`);
+}
 
 const seoTitle = meta.title || tool.title;
 const seoDescription = meta.description || tool.body;

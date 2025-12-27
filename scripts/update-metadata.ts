@@ -9,10 +9,62 @@ const __dirname = path.dirname(__filename);
 
 const toolsPath = path.join(__dirname, '../src/data/tools.json');
 const metadataPath = path.join(__dirname, '../src/data/metadata.json');
+const faviconsDir = path.join(__dirname, '../public/favicons');
 
 const CONCURRENCY_LIMIT = 25;
 const TIMEOUT_MS = 6000;
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+
+// Ensure favicons directory exists
+if (!fs.existsSync(faviconsDir)) {
+    fs.mkdirSync(faviconsDir, { recursive: true });
+    console.log(`📁 Created favicons directory: ${faviconsDir}`);
+}
+
+function extractDomain(url: string): string | null {
+    try {
+        return new URL(url).hostname.replace('www.', '');
+    } catch {
+        return null;
+    }
+}
+
+async function fetchFavicon(tool: Tool): Promise<boolean> {
+    if (!tool.url || !tool.slug) return false;
+
+    const domain = extractDomain(tool.url);
+    if (!domain) return false;
+
+    const faviconPath = path.join(faviconsDir, `${tool.slug}.png`);
+
+    // Skip if favicon already exists
+    if (fs.existsSync(faviconPath)) {
+        return true;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+    try {
+        // Use Google's favicon service to fetch (one-time download, then self-hosted)
+        const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
+        const response = await fetch(faviconUrl, {
+            headers: { "User-Agent": USER_AGENT },
+            signal: controller.signal,
+        });
+
+        if (!response.ok) return false;
+
+        const buffer = await response.arrayBuffer();
+        fs.writeFileSync(faviconPath, new Uint8Array(buffer));
+        return true;
+
+    } catch (err: any) {
+        return false;
+    } finally {
+        clearTimeout(timeoutId);
+    }
+}
 
 async function fetchMetadata(tool: Tool): Promise<MetadataEntry | null> {
     const url = tool.url;
@@ -60,14 +112,18 @@ async function fetchMetadata(tool: Tool): Promise<MetadataEntry | null> {
 }
 
 async function main() {
+    console.log("🚀 Starting metadata and favicon update...\n");
     console.log("Reading tools.json...");
     const data: ToolsConfig = JSON.parse(fs.readFileSync(toolsPath, 'utf-8'));
 
     const allTools = data.tools.flatMap(cat => cat.content).filter(t => t.slug && t.url);
-    console.log(`Found ${allTools.length} tools. Starting metadata fetch (Concurrency: ${CONCURRENCY_LIMIT})...`);
+    console.log(`Found ${allTools.length} tools. Starting fetch (Concurrency: ${CONCURRENCY_LIMIT})...\n`);
 
     let completed = 0;
+    let metadataFetched = 0;
+    let faviconsFetched = 0;
     let existingMetadata: MetadataMap = {};
+
     if (fs.existsSync(metadataPath)) {
         try {
             existingMetadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'));
@@ -81,31 +137,42 @@ async function main() {
 
     for (let i = 0; i < allTools.length; i += CONCURRENCY_LIMIT) {
         const chunk = allTools.slice(i, i + CONCURRENCY_LIMIT);
-        const promises = chunk.map(tool => {
+        const promises = chunk.map(async (tool) => {
             const slug = tool.slug as string;
+
+            // Fetch favicon (always attempt, will skip if exists)
+            const faviconSuccess = await fetchFavicon(tool);
+            if (faviconSuccess) faviconsFetched++;
 
             // If we have valid existing metadata, keep it and skip fetch
             if (existingMetadata[slug] && existingMetadata[slug].title) {
                 results[slug] = existingMetadata[slug];
                 completed++;
-                return Promise.resolve();
+                return;
             }
 
             // Otherwise, fetch fresh metadata
-            return fetchMetadata(tool).then(res => {
-                completed++;
-                if (completed % 50 === 0) process.stdout.write(`\rProgress: ${completed}/${allTools.length}`);
-                if (res && res.slug) results[res.slug] = res;
-            });
+            const res = await fetchMetadata(tool);
+            completed++;
+            if (completed % 50 === 0) {
+                process.stdout.write(`\rProgress: ${completed}/${allTools.length} | Metadata: ${metadataFetched} | Favicons: ${faviconsFetched}`);
+            }
+            if (res && res.slug) {
+                results[res.slug] = res;
+                metadataFetched++;
+            }
         });
 
         await Promise.all(promises);
     }
 
-    console.log(`\n\nPruned stale keys. Fetched metadata for ${Object.keys(results).length} tools.`);
+    console.log(`\n\n✨ Update complete!`);
+    console.log(`📊 Metadata entries: ${Object.keys(results).length}`);
+    console.log(`🎨 Favicons stored: ${faviconsFetched}`);
+    console.log(`📁 Favicon directory: ${faviconsDir}`);
 
     fs.writeFileSync(metadataPath, JSON.stringify(results, null, 2));
-    console.log(`Saved to ${metadataPath}`);
+    console.log(`\n💾 Saved metadata to ${metadataPath}`);
 }
 
 main();

@@ -1,0 +1,9 @@
+{
+  "title": "methexis-inc/img2prompt | Run with an API on Replicate",
+  "description": "Get an approximate text prompt, with style, matching an image.  (Optimized for stable-diffusion (clip ViT-L/14))",
+  "category": "prompts",
+  "url": "https://replicate.com/methexis-inc/img2prompt/?ref=riseofmachine.com",
+  "tag": "Pay-as-you-go",
+  "date-added": "2023-12-15",
+  "slug": "img2prompt"
+}
