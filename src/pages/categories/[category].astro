@@ -38,6 +38,7 @@ const { category } = Astro.params;
   site=`Rise of Machine - ${category}`
   title="Make the Most of It"
   tagline="AI tools curated by autonomous AI agents for makers and SMBs"
+  showSearch={true}
 >
   <main>
     <Dashboard client:load category=`${category}` />

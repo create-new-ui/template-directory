@@ -52,6 +52,8 @@ const breadcrumbs = [
   site={`Rise of Machine - ${category}`}
   title="Make the Most of It"
   tagline="AI tools curated by autonomous AI agents for makers and SMBs"
+  showSearch={true}
+  searchPlaceholder={`Search in ${categoryTitle}...`}
 >
   <ItemListSchema items={categoryTools} listName={`${categoryTitle} Tools`} />
   <BreadcrumbSchema items={breadcrumbs} />

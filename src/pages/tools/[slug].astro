@@ -404,7 +404,8 @@ const breadcrumbs = [
 
   <style is:global>
     /* Hide hero immediately on tool pages to prevent flash */
-    html[data-tool-page="true"] .hero {
+    html[data-tool-page="true"] .hero,
+    html[data-tool-page="true"] .footer {
       display: none !important;
     }
 

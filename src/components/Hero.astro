@@ -1,10 +1,19 @@
 ---
+import SearchInput from "./SearchInput";
+
 interface Props {
     title: string;
     tagline: string;
+    showSearch?: boolean;
+    searchPlaceholder?: string;
 }
 
-const { title, tagline } = Astro.props;
+const {
+    title,
+    tagline,
+    showSearch = false,
+    searchPlaceholder = "Search by name, category, or feature...",
+} = Astro.props;
 ---
 
 <div class="hero">
@@ -15,6 +24,11 @@ const { title, tagline } = Astro.props;
         <p class="nu-c-fs-small nu-u-text--secondary description-text">
             {tagline}
         </p>
+        {
+            showSearch && (
+                <SearchInput client:load placeholder={searchPlaceholder} />
+            )
+        }
     </div>
 </div>
 
@@ -22,5 +36,11 @@ const { title, tagline } = Astro.props;
     .hero {
         margin-bottom: var(--spacing-10);
         margin-top: var(--spacing-10);
+        text-align: center;
+    }
+
+    .hero :global(.search-container) {
+        display: flex;
+        justify-content: center;
     }
 </style>

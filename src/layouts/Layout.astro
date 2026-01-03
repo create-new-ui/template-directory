@@ -22,6 +22,8 @@ export interface Props {
     twitterDescription?: string;
     twitterImage?: string;
     pageFavicon?: string;
+    showSearch?: boolean;
+    searchPlaceholder?: string;
 }
 
 const {
@@ -42,6 +44,8 @@ const {
     twitterDescription,
     twitterImage,
     pageFavicon,
+    showSearch = false,
+    searchPlaceholder = "Search by name, category, or feature...",
 } = Astro.props;
 ---
 
@@ -104,6 +108,12 @@ const {
             gtag("js", new Date());
 
             gtag("config", "G-S08Z38BTMJ");
+        </script>
+        <script is:inline>
+            if (window.location.pathname.startsWith("/tools/")) {
+                document.documentElement.setAttribute("data-tool-page", "true");
+                document.body?.setAttribute("data-modal-open", "true");
+            }
         </script>
         <ViewTransitions />
         <WebSiteSchema />
@@ -198,7 +208,12 @@ const {
             </div>
         </div>
 
-        <Hero title={title} tagline={tagline} />
+        <Hero
+            title={title}
+            tagline={tagline}
+            showSearch={showSearch}
+            searchPlaceholder={searchPlaceholder}
+        />
         <slot />
 
         <div class="footer">
@@ -325,14 +340,8 @@ const {
         font-family: "ROM-Bold", var(--system-ui);
         font-weight: 500;
     }
-    h1.title {
-        max-inline-size: 32rem;
-    }
     p {
         margin-top: var(--spacing-00);
-    }
-    p.description-text {
-        max-inline-size: 32rem;
     }
     .nu-u-link--subtle {
         color: var(--content-secondary) !important;
@@ -655,21 +664,15 @@ const {
     });
 </script>
 
-<script>
-    // Handle data-tool-page attribute for ViewTransitions
-    function updateToolPageAttribute() {
+<script is:inline>
+    document.addEventListener("astro:page-load", function () {
         if (window.location.pathname.startsWith("/tools/")) {
             document.documentElement.setAttribute("data-tool-page", "true");
         } else {
             document.documentElement.removeAttribute("data-tool-page");
+            document.body.removeAttribute("data-modal-open");
         }
-    }
-
-    // Run on initial load
-    updateToolPageAttribute();
-
-    // Run on every client-side navigation
-    document.addEventListener("astro:page-load", updateToolPageAttribute);
+    });
 </script>
 
 <script is:inline>

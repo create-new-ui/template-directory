@@ -1,11 +1,11 @@
 import { useMemo, useState, useEffect, useRef } from "react";
+import Fuse from "fuse.js";
 import Card from "./Card";
 import "./CardsContainer.css";
 import data from "../data/tools.json";
 
 const ITEMS_PER_PAGE = 32;
 
-// Sorting comparators
 const comparators = {
   nameAsc: (a, b) => a.title.localeCompare(b.title),
   nameDesc: (a, b) => b.title.localeCompare(a.title),
@@ -13,11 +13,23 @@ const comparators = {
     new Date(b["date-added"] || 0) - new Date(a["date-added"] || 0),
   dateOldest: (a, b) =>
     new Date(a["date-added"] || 0) - new Date(b["date-added"] || 0),
-  // random entry placeholder — we'll use a seeded shuffle function below instead
   random: null,
 };
 
-export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 0 }) {
+const fuseOptions = {
+  keys: [
+    { name: 'title', weight: 0.4 },
+    { name: 'body', weight: 0.3 },
+    { name: 'category', weight: 0.2 },
+    { name: 'tag', weight: 0.1 }
+  ],
+  threshold: 0.3,
+  includeScore: true,
+  minMatchCharLength: 2,
+  ignoreLocation: true
+};
+
+export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 0, searchQuery = "" }) {
   const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
   const [isLoading, setIsLoading] = useState(false);
   const loaderRef = useRef(null);
@@ -48,21 +60,42 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filteredCards = useMemo(() => {
-    const base = data.tools
-      .filter((item) => filter === "all" || filter === item.category)
-      .flatMap((item) =>
-        item.content.map((tool) => ({
-          ...tool,
-          category: item.category,
-        }))
-      );
+  const allFlatTools = useMemo(() => {
+    return data.tools.flatMap((item) =>
+      item.content.map((tool) => ({
+        ...tool,
+        category: item.category,
+      }))
+    );
+  }, []);
 
-    // Create a copy and apply sort
+  const fuse = useMemo(() => {
+    return new Fuse(allFlatTools, fuseOptions);
+  }, [allFlatTools]);
+
+  const filteredCards = useMemo(() => {
+    let base;
+
+    if (searchQuery && searchQuery.length >= 2) {
+      const results = fuse.search(searchQuery);
+      base = results.map(result => result.item);
+      if (filter !== "all") {
+        base = base.filter(tool => tool.category === filter);
+      }
+    } else {
+      base = data.tools
+        .filter((item) => filter === "all" || filter === item.category)
+        .flatMap((item) =>
+          item.content.map((tool) => ({
+            ...tool,
+            category: item.category,
+          }))
+        );
+    }
+
     const sorted = [...base];
-    
+
     if (sort === "random") {
-      // Seeded Fisher-Yates shuffle to reliably shuffle all entries based on seed
       const mulberry32 = (a) => {
         return function () {
           a |= 0;
@@ -88,14 +121,14 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
       const comparator = comparators[sort] || comparators.nameAsc;
       sorted.sort(comparator);
     }
-    
+
     return sorted;
-  }, [filter, sort, randomSeed]);
+  }, [filter, sort, randomSeed, searchQuery, fuse]);
 
   // Reset displayed count when filter changes
   useEffect(() => {
     setDisplayedCount(ITEMS_PER_PAGE);
-  }, [filter]);
+  }, [filter, searchQuery]);
 
   // Listen for save-state events (dispatched before navigating to a tool detail)
   useEffect(() => {
@@ -189,7 +222,7 @@ export default function CardsContainer({ filter, sort = "nameAsc", randomSeed = 
           />
         ))}
       </ul>
-      
+
       {displayedCount < filteredCards.length && (
         <div ref={loaderRef} className="infinite-scroll-loader">
           {isLoading && (
