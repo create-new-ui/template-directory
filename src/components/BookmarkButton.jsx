@@ -18,7 +18,7 @@ export default function BookmarkButton({
     }, [slug]);
 
     useEffect(() => {
-        const handleBookmarkChange = (e) => {
+        const handleBookmarkChange = () => {
             if (slug) {
                 setBookmarked(isBookmarked(slug));
             }

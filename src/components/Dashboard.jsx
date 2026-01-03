@@ -3,14 +3,9 @@ import CategoryNav from "./CategoryNav";
 import CardsContainer from "./CardsContainer";
 
 export default function Dashboard({ category }) {
-  const [currentCategory, setCurrentCategory] = useState(category);
   const [currentSort, setCurrentSort] = useState("nameAsc");
   const [randomSeed, setRandomSeed] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    setCurrentCategory(category);
-  }, [category]);
 
   useEffect(() => {
     const handleSortChange = (e) => {

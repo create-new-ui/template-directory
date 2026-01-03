@@ -340,14 +340,8 @@ const {
         font-family: "ROM-Bold", var(--system-ui);
         font-weight: 500;
     }
-    h1.title {
-        max-inline-size: 32rem;
-    }
     p {
         margin-top: var(--spacing-00);
-    }
-    p.description-text {
-        max-inline-size: 32rem;
     }
     .nu-u-link--subtle {
         color: var(--content-secondary) !important;
@@ -670,21 +664,15 @@ const {
     });
 </script>
 
-<script>
-    // Handle data-tool-page attribute for ViewTransitions
-    function updateToolPageAttribute() {
+<script is:inline>
+    document.addEventListener("astro:page-load", function () {
         if (window.location.pathname.startsWith("/tools/")) {
             document.documentElement.setAttribute("data-tool-page", "true");
         } else {
             document.documentElement.removeAttribute("data-tool-page");
+            document.body.removeAttribute("data-modal-open");
         }
-    }
-
-    // Run on initial load
-    updateToolPageAttribute();
-
-    // Run on every client-side navigation
-    document.addEventListener("astro:page-load", updateToolPageAttribute);
+    });
 </script>
 
 <script is:inline>

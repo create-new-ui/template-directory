@@ -6,7 +6,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    max-width: 400px;
+    width: 100%;
+    max-width: 24rem;
 }
 
 .search-icon {
@@ -31,7 +32,7 @@
 }
 
 .search-input::placeholder {
-    color: var(--content-secondary);
+    color: var(--content-placeholder);
 }
 
 .search-input:focus {
