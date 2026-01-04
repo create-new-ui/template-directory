@@ -1332,15 +1332,15 @@
     "title": "Lintrule",
     "description": "Have the LLM do your code review"
   },
-  "cursor-mcp": {
-    "slug": "cursor-mcp",
-    "title": "Best MCP Servers for Cursor - CURSOR MCP",
-    "description": "Discover the largest collection of MCP Servers for Cursor. Search and find powerful MCP Servers to enhance your AI client capabilities."
-  },
   "capmonster-cloud": {
     "slug": "capmonster-cloud",
     "title": "CAPTCHA Solver – Automatic CAPTCHA Solving Service | CapMonster Cloud",
     "description": "CapMonster Cloud is a fast CAPTCHA solver and automatic solving service. This AI-powered tool supports reCAPTCHA, GeeTest, Cloudflare, and more. Scale the online solving of simple and complex CAPTCHAs using CapMonster Cloud’s built-in intelligent reader."
+  },
+  "cursor-mcp": {
+    "slug": "cursor-mcp",
+    "title": "Best MCP Servers for Cursor - CURSOR MCP",
+    "description": "Discover the largest collection of MCP Servers for Cursor. Search and find powerful MCP Servers to enhance your AI client capabilities."
   },
   "lobe-chat": {
     "slug": "lobe-chat",
@@ -1573,14 +1573,14 @@
     "title": "Synexa AI: Deploy AI Models in One Line of Code",
     "description": "Simplify AI deployment with Synexa. Run powerful AI models instantly with just one line of code. Fast, stable, and developer-friendly."
   },
-  "tinygrad": {
-    "slug": "tinygrad",
-    "title": "tinygrad: A simple and powerful neural network framework"
-  },
   "zen-agents": {
     "slug": "zen-agents",
     "title": "Zencoder | The AI Coding Agent",
     "description": "Discover Zencoder's AI Coding Agent Platform for seamless code execution and collaboration. Boost productivity with advanced analytics, flexible deployment, and custom agents for your team."
+  },
+  "tinygrad": {
+    "slug": "tinygrad",
+    "title": "tinygrad: A simple and powerful neural network framework"
   },
   "zeno": {
     "slug": "zeno",
@@ -2157,8 +2157,8 @@
     "title": "Chat100.ai: Free Access to OpenAI GPT-4o and Claude 3.5",
     "description": "Page Description"
   },
-  "aicode": {
-    "slug": "aicode",
+  "body-fat-calc": {
+    "slug": "body-fat-calc",
     "title": "Redirecting..."
   },
   "ai-agents-live": {
@@ -2166,8 +2166,8 @@
     "title": "AI Agents & Services Directory | AI Agents Live Dec 2025",
     "description": "The definitive directory of curated AI agents & services - discover and explore the best AI agents to transform your business with AI Agents Live"
   },
-  "body-fat-calc": {
-    "slug": "body-fat-calc",
+  "aicode": {
+    "slug": "aicode",
     "title": "Redirecting..."
   },
   "chatbotkit": {
@@ -2740,6 +2740,10 @@
     "title": "Image Optimizer AI — Generate & Compress Web-Ready Images",
     "description": "Create brand-styled images with AI and optimize them for the web. Automatically compress, resize, strip metadata, convert formats, and boost SEO with the best Image Optimizer."
   },
+  "facevary": {
+    "slug": "facevary",
+    "title": "facevary.com"
+  },
   "image-enlarger": {
     "slug": "image-enlarger",
     "title": "Imglarger | AI Image Enlarger, Enhancer, Editor and Converter",
@@ -2749,10 +2753,6 @@
     "slug": "dual-shades",
     "title": "Dual Shades - AI Photo Editor | Keep Subject Colored, Background B&W",
     "description": "Transform photos instantly with Dual Shades AI. Keep your subject in vibrant color while turning the background black and white. Free online photo editor with drag-and-drop uploads."
-  },
-  "facevary": {
-    "slug": "facevary",
-    "title": "facevary.com"
   },
   "imggen-ai": {
     "slug": "imggen-ai",
@@ -3884,11 +3884,6 @@
     "title": "Postli | AI-Powered LinkedIn Content Creation",
     "description": "Postli: Revolutionize your LinkedIn presence with AI-driven post creation. Use 1000 templates to create posts. Generate engaging, professional content effortlessly. Ideal for marketers, influencers, and professionals."
   },
-  "createnew": {
-    "slug": "createnew",
-    "title": "Create Anything with AI — Free Video, Image, Music Tools | CreateNew",
-    "description": "Access free AI tools for video, image, music, and more with CreateNew — an all-in-one platform built for fast, high-quality creation."
-  },
   "social-hub": {
     "slug": "social-hub",
     "title": "Socialhub.AI"
@@ -3897,6 +3892,11 @@
     "slug": "rizz-ai",
     "title": "RIZZ AI Assistant: Free RIZZ GPT and Fun AI Dating Assistant",
     "description": "RIZZ AI Assistant is an AI dating assistant built on the RIZE GPT model. Through a large number of high-quality chat and pick-up cases, RIZZ AI has trained chat LLMs who can understand users' psychology and are good at humorous pick-up conversations, becoming the best Tinder tutor."
+  },
+  "createnew": {
+    "slug": "createnew",
+    "title": "Create Anything with AI — Free Video, Image, Music Tools | CreateNew",
+    "description": "Access free AI tools for video, image, music, and more with CreateNew — an all-in-one platform built for fast, high-quality creation."
   },
   "dadan": {
     "slug": "dadan",
@@ -4474,14 +4474,14 @@
     "title": "A Brand New Domain!",
     "description": "Brought to you by Porkbun."
   },
-  "hoody": {
-    "slug": "hoody",
-    "title": "For Sale Page"
-  },
   "imagebyqwen": {
     "slug": "imagebyqwen",
     "title": "Qwen Image - Advanced AI Photo Generator | ImageByQwen",
     "description": "Qwen Image is the most advanced AI photo generator that transforms your ideas into stunning, photorealistic images using cutting-edge Qwen models. Create beautiful photos in seconds. Credits required for usage."
+  },
+  "hoody": {
+    "slug": "hoody",
+    "title": "For Sale Page"
   },
   "fluxaicreate": {
     "slug": "fluxaicreate",

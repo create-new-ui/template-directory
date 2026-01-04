@@ -4,7 +4,6 @@ import BookmarkButton from "./BookmarkButton";
 export default function Card(props) {
   const { href, title, body, tag, dateAdded, slug, category } = props;
 
-  // Use slug-based internal URL if available, otherwise fall back to external URL
   const linkUrl = slug ? `/tools/${slug}` : href;
 
   const isNew = () => {
@@ -24,11 +23,8 @@ export default function Card(props) {
         href={linkUrl}
         onClick={() => {
           try {
-            // Tell the listing to save its UI state before navigation
             window.dispatchEvent(new CustomEvent('tools:save-state'));
-          } catch (err) {
-            // ignore
-          }
+          } catch (err) { }
         }}
       >
         <strong className="nu-c-fs-normal nu-u-mt-1 nu-u-mb-1">{title}</strong>

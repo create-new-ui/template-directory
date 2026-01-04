@@ -3,6 +3,7 @@ import { ViewTransitions } from "astro:transitions";
 import SortButtons from "../components/SortButtons";
 import WebSiteSchema from "../components/schema/WebSiteSchema.astro";
 import Hero from "../components/Hero.astro";
+import "@new-ui/foundations";
 
 export interface Props {
     site: string;
@@ -225,6 +226,10 @@ const {
                     target="_blank"
                     rel="noopener noreferrer">@planetabhi</a
                 >
+                <span class="footer-separator">·</span>
+                <a href="/privacy" class="nu-u-link--subtle">Privacy</a>
+                <span class="footer-separator">·</span>
+                <a href="/terms" class="nu-u-link--subtle">Terms</a>
             </p>
         </div>
     </body>
@@ -600,168 +605,192 @@ const {
             margin: var(--spacing-06);
         }
     }
+
+    .legal-content-wrapper {
+        max-width: 45rem;
+        margin: 0 auto;
+        padding: var(--spacing-09);
+        border: 0.5px solid var(--border-muted);
+    }
+
+    .legal-header {
+        margin-bottom: var(--spacing-08);
+        border-bottom: 0.5px solid var(--border-muted);
+        padding-bottom: var(--spacing-04);
+    }
+
+    .last-updated {
+        font-family: var(--monospace);
+        font-size: var(--desktop-caption);
+        color: var(--content-secondary-alt);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .legal-content-wrapper h2 {
+        margin: var(--spacing-08) 0 var(--spacing-04) 0;
+        font-weight: 600;
+    }
+
+    .legal-content-wrapper p,
+    .legal-content-wrapper li {
+        margin-bottom: var(--spacing-05);
+        line-height: var(--lh-desktop-body);
+    }
+
+    @media (max-width: 768px) {
+        .legal-content-wrapper {
+            padding: var(--spacing-06);
+            margin: 0 var(--spacing-04);
+        }
+    }
 </style>
 
 <script is:inline>
-    history.scrollRestoration = "manual";
-    window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-    };
-
-    const nav = document.querySelector(".floating-nav");
-    const pageCTA = document.querySelector(".floating-nav .submit-btn");
-    var pageCTAPosition = 0;
-    if (pageCTA) {
-        pageCTAPosition = pageCTA.getBoundingClientRect().bottom;
-    }
-
-    var previousScrollPosition = 0;
-
-    const handleNavScroll = () => {
-        let currentScrolledPosition = window.scrollY || window.pageYOffset;
-        if (isScrollingDown()) {
-            nav.classList.add("scroll-down");
-            nav.classList.remove("scroll-up");
-        } else {
-            nav.classList.add("scroll-up");
-            nav.classList.remove("scroll-down");
-        }
-        if (currentScrolledPosition > pageCTAPosition + 50) {
-            if (!nav.classList.contains("is-active")) {
-                nav.classList.add("is-active");
+    (function () {
+        // Theme Management
+        const getPreferredTheme = () => {
+            try {
+                return (
+                    localStorage.getItem("theme-preference") || "light--warm"
+                );
+            } catch (e) {
+                return "light--warm";
             }
-        } else {
-            if (nav.classList.contains("is-active")) {
+        };
+
+        const setTheme = (theme) => {
+            document.documentElement.setAttribute("data-new-ui-theme", theme);
+            try {
+                localStorage.setItem("theme-preference", theme);
+            } catch (e) {}
+        };
+
+        const toggleTheme = () => {
+            const currentTheme =
+                document.documentElement.getAttribute("data-new-ui-theme");
+            const newTheme =
+                currentTheme === "light--warm" ? "dark--warm" : "light--warm";
+            setTheme(newTheme);
+        };
+
+        // Initialize Theme ASAP to prevent flash
+        setTheme(getPreferredTheme());
+
+        // Navigation & UI Management
+        let previousScrollPosition = 0;
+        let pageCTAPosition = 0;
+
+        const handleNavScroll = () => {
+            const nav = document.querySelector(".floating-nav");
+            if (!nav) return;
+
+            const currentScrolledPosition =
+                window.scrollY || window.pageYOffset;
+            const scrollingDown =
+                currentScrolledPosition > previousScrollPosition;
+
+            if (scrollingDown) {
+                nav.classList.add("scroll-down");
+                nav.classList.remove("scroll-up");
+            } else {
+                nav.classList.add("scroll-up");
+                nav.classList.remove("scroll-down");
+            }
+
+            if (currentScrolledPosition > pageCTAPosition + 50) {
+                nav.classList.add("is-active");
+            } else {
                 nav.classList.remove("is-active");
             }
+            previousScrollPosition = currentScrolledPosition;
+        };
+
+        let throttleWait;
+        function throttle(callback, time) {
+            if (throttleWait) return;
+            throttleWait = true;
+            setTimeout(() => {
+                callback();
+                throttleWait = false;
+            }, time);
         }
-    };
 
-    function isScrollingDown() {
-        let currentScrolledPosition = window.scrollY || window.pageYOffset;
-        let scrollingDown;
-        if (currentScrolledPosition > previousScrollPosition) {
-            scrollingDown = true;
-        } else {
-            scrollingDown = false;
-        }
-        previousScrollPosition = currentScrolledPosition;
-        return scrollingDown;
-    }
+        const updateFavoritesLink = () => {
+            try {
+                const linkEl = document.getElementById("favoritesLink");
+                const countEl = document.getElementById("favoritesCount");
+                if (!linkEl || !countEl) return;
 
-    var throttleWait;
-    function throttle(callback, time) {
-        if (throttleWait) return;
-        throttleWait = true;
-        setTimeout(() => {
-            callback();
-            throttleWait = false;
-        }, time);
-    }
+                const bookmarksString = localStorage.getItem("rom_bookmarks");
+                const count = bookmarksString
+                    ? JSON.parse(bookmarksString).length
+                    : 0;
 
-    window.addEventListener("scroll", () => {
-        throttle(handleNavScroll, 80);
-    });
-</script>
+                if (count > 0) {
+                    linkEl.style.display = "inline-flex";
+                    countEl.textContent = count;
+                } else {
+                    linkEl.style.display = "none";
+                    countEl.textContent = "";
+                }
+            } catch (e) {}
+        };
 
-<script is:inline>
-    document.addEventListener("astro:page-load", function () {
-        if (window.location.pathname.startsWith("/tools/")) {
-            document.documentElement.setAttribute("data-tool-page", "true");
-        } else {
-            document.documentElement.removeAttribute("data-tool-page");
-            document.body.removeAttribute("data-modal-open");
-        }
-    });
-</script>
+        // Core Initialization (Runs on every page load including initial)
+        const init = () => {
+            // Re-apply theme (ensures HTML element sync)
+            setTheme(getPreferredTheme());
 
-<script is:inline>
-    // Update favorites link visibility
-    function updateFavoritesLink() {
-        try {
-            const linkEl = document.getElementById("favoritesLink");
-            const countEl = document.getElementById("favoritesCount");
-            if (!linkEl || !countEl) return;
+            // Handle Nav & CTA positions
+            const nav = document.querySelector(".floating-nav");
+            const pageCTA = document.querySelector(".floating-nav .submit-btn");
+            if (pageCTA) {
+                pageCTAPosition = pageCTA.getBoundingClientRect().bottom;
+            }
 
-            const bookmarks = localStorage.getItem("rom_bookmarks");
-            const count = bookmarks ? JSON.parse(bookmarks).length : 0;
+            // Theme Toggle - Idempotent listener
+            const themeToggle = document.querySelector("#theme-toggle");
+            if (themeToggle) {
+                // Use a property to ensure we only attach once
+                if (!themeToggle._hasThemeListener) {
+                    themeToggle.addEventListener("click", toggleTheme);
+                    themeToggle._hasThemeListener = true;
+                }
+            }
 
-            // Show link only if there are bookmarks
-            if (count > 0) {
-                linkEl.style.display = "inline-flex";
-                countEl.textContent = count;
+            // Path-specific attributes
+            if (window.location.pathname.startsWith("/tools/")) {
+                document.documentElement.setAttribute("data-tool-page", "true");
+                // Ensure body is ready before setting attribute
+                if (document.body) {
+                    document.body.setAttribute("data-modal-open", "true");
+                }
             } else {
-                linkEl.style.display = "none";
-                countEl.textContent = "";
+                document.documentElement.removeAttribute("data-tool-page");
+                if (document.body) {
+                    document.body.removeAttribute("data-modal-open");
+                }
             }
-        } catch (e) {
-            console.error("Error updating favorites link:", e);
+
+            updateFavoritesLink();
+        };
+
+        // Scroll Restoration
+        history.scrollRestoration = "manual";
+        window.onbeforeunload = () => window.scrollTo(0, 0);
+
+        // Event Listeners
+        window.addEventListener("scroll", () => throttle(handleNavScroll, 80));
+        window.addEventListener("bookmarks:changed", updateFavoritesLink);
+        window.addEventListener("pageshow", updateFavoritesLink);
+        document.addEventListener("astro:page-load", init);
+
+        // Initial run for non-ViewTransitions browsers or very fast load
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", init);
+        } else {
+            init();
         }
-    }
-
-    // Run on initial load
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", updateFavoritesLink);
-    } else {
-        updateFavoritesLink();
-    }
-
-    // Listen for bookmark changes
-    window.addEventListener("bookmarks:changed", updateFavoritesLink);
-
-    // Also update on page show (for back/forward navigation)
-    window.addEventListener("pageshow", updateFavoritesLink);
-
-    // Handle Astro page transitions
-    document.addEventListener("astro:page-load", updateFavoritesLink);
-</script>
-
-<script is:inline>
-    // Initial theme setup
-    const theme = (() => {
-        try {
-            if (
-                typeof localStorage !== "undefined" &&
-                localStorage.getItem("theme-preference")
-            ) {
-                return localStorage.getItem("theme-preference");
-            }
-        } catch (e) {
-            // ignore
-        }
-        return "light--warm";
     })();
-    document.firstElementChild.setAttribute("data-new-ui-theme", theme);
-
-    // Handle theme toggle
-    function toggleTheme() {
-        const currentTheme =
-            document.firstElementChild.getAttribute("data-new-ui-theme");
-        const newTheme =
-            currentTheme === "light--warm" ? "dark--warm" : "light--warm";
-        document.firstElementChild.setAttribute("data-new-ui-theme", newTheme);
-        localStorage.setItem("theme-preference", newTheme);
-    }
-
-    // Initialize toggle button
-    function initThemeToggle() {
-        const themeToggle = document.querySelector("#theme-toggle");
-        if (themeToggle) {
-            themeToggle.addEventListener("click", toggleTheme);
-        }
-    }
-
-    // Handle page transitions
-    document.addEventListener("astro:page-load", () => {
-        const storedTheme = localStorage.getItem("theme-preference");
-        if (storedTheme) {
-            document.firstElementChild.setAttribute(
-                "data-new-ui-theme",
-                storedTheme,
-            );
-        }
-        initThemeToggle();
-    });
-
-    initThemeToggle();
 </script>

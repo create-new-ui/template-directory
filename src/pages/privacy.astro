@@ -1,0 +1,96 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BreadcrumbSchema from "../components/schema/BreadcrumbSchema.astro";
+const breadcrumbs = [
+    { name: "Home", url: "https://riseofmachine.com" },
+    { name: "Privacy Policy" },
+];
+---
+
+<Layout
+    site="Rise of Machine"
+    title="Privacy Policy"
+    tagline="How we handle your data and respect your privacy"
+    pageTitle="Privacy Policy"
+    pageDescription="Privacy Policy for Rise of Machine - AI tools directory."
+>
+    <BreadcrumbSchema items={breadcrumbs} />
+
+    <main class="container">
+        <div class="legal-content-wrapper">
+            <header class="legal-header">
+                <p class="last-updated">Last Updated: January 4, 2026</p>
+            </header>
+
+            <article class="nu-u-text--secondary">
+                <p class="nu-c-fs-regular">
+                    At Rise of Machine, accessible from
+                    https://riseofmachine.com, one of our main priorities is the
+                    privacy of our visitors. This Privacy Policy document
+                    contains types of information that is collected and recorded
+                    by Rise of Machine and how we use it.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">1. Data Collection</h2>
+                <p>
+                    Rise of Machine is a static website designed to provide
+                    information about AI tools. We do not require user
+                    registration and do not collect any personally identifiable
+                    information (PII) directly from you unless you choose to
+                    contact us through external channels (e.g., GitHub or Social
+                    Media).
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">
+                    2. Local Storage (Bookmarks)
+                </h2>
+                <p>
+                    Our "Saved Tools" feature uses your browser's <strong
+                        class="nu-u-text--primary">localStorage</strong
+                    > to store the IDs of tools you have bookmarked. This data is
+                    stored locally on your device and is never sent to our servers.
+                    You can clear this data at any time by clearing your browser's
+                    cache or using the "Remove" option in the UI.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">3. Analytics</h2>
+                <p>
+                    We use Google Analytics to understand how visitors interact
+                    with our website. Google Analytics uses cookies to track
+                    anonymized data (e.g., pages visited, session duration).
+                    This helps us improve the user experience. You can opt-out
+                    by installing the Google Analytics Opt-out Browser Add-on.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">4. Cookies</h2>
+                <p>
+                    Like most modern websites, we use cookies to optimize your
+                    experience. Cookies are small text files stored on your
+                    device that help us remember your preferences (like theme
+                    settings) and analyze traffic patterns.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">5. Third-Party Links</h2>
+                <p>
+                    Our directory provides links to many external AI tools. We
+                    do not control and are not responsible for the privacy
+                    practices or content of these third-party sites. We
+                    encourage you to review their policies separately.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">6. Consent</h2>
+                <p>
+                    By using our website, you hereby consent to our Privacy
+                    Policy and agree to its terms.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">7. Contact</h2>
+                <p>
+                    If you have questions about our privacy practices, feel free
+                    to reach out to @planetabhi on social media or via our
+                    GitHub repository.
+                </p>
+            </article>
+        </div>
+    </main>
+</Layout>

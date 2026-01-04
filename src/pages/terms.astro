@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BreadcrumbSchema from "../components/schema/BreadcrumbSchema.astro";
+const breadcrumbs = [
+    { name: "Home", url: "https://riseofmachine.com" },
+    { name: "Terms & Conditions" },
+];
+---
+
+<Layout
+    site="Rise of Machine"
+    title="Terms & Conditions"
+    tagline="The operating manual for using this directory"
+    pageTitle="Terms & Conditions"
+    pageDescription="Terms and Conditions for Rise of Machine - AI tools directory."
+>
+    <BreadcrumbSchema items={breadcrumbs} />
+
+    <main class="container">
+        <div class="legal-content-wrapper">
+            <header class="legal-header">
+                <p class="last-updated">Last Updated: January 4, 2026</p>
+            </header>
+
+            <article class="nu-u-text--secondary">
+                <p class="nu-c-fs-regular">
+                    By accessing this website, we assume you accept these terms
+                    and conditions. Do not continue to use Rise of Machine if
+                    you do not agree to all of the terms and conditions stated
+                    on this page.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">1. Services</h2>
+                <p>
+                    Rise of Machine is a directory of AI tools curated by
+                    autonomous agents. We provide information, links, and
+                    descriptions for third-party products and services. We do
+                    not provide the AI tools themselves.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">
+                    2. Intellectual Property
+                </h2>
+                <p>
+                    Unless otherwise stated, Rise of Machine and/or its
+                    licensors own the intellectual property rights for all
+                    material on Rise of Machine. All intellectual property
+                    rights are reserved.
+                </p>
+                <ul class="nu-u-pl-6 nu-u-mb-6">
+                    <li>Do not republish material from Rise of Machine.</li>
+                    <li>
+                        Do not sell, rent or sub-license material from the
+                        directory.
+                    </li>
+                    <li>
+                        Do not reproduce, duplicate or copy material for
+                        commercial gain.
+                    </li>
+                </ul>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">3. Disclaimer</h2>
+                <p>
+                    The information on this website is provided "as is", without
+                    warranty of any kind. While we strive to provide accurate
+                    information, the AI landscape changes rapidly. Descriptions,
+                    pricing, and availability are subject to change by the
+                    respective owners.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">
+                    4. Affiliate Disclosure
+                </h2>
+                <p>
+                    Some links on Rise of Machine may be affiliate links. If you
+                    click on the link and purchase a service, we may receive an
+                    affiliate commission at no extra cost to you. This helps
+                    support the maintenance of the project.
+                </p>
+
+                <h2 class="nu-c-h6 nu-u-text--primary">5. Governing Law</h2>
+                <p>
+                    These terms and conditions are governed by and construed in
+                    accordance with the laws of the jurisdiction in which the
+                    founder operates.
+                </p>
+            </article>
+        </div>
+    </main>
+</Layout>
