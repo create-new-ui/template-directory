@@ -1901,15 +1901,7 @@
           "slug": "luma-ai"
         },
         {
-          "title": "Magician",
-          "body": "Generate icons, copy & images in Figma.",
-          "tag": "Free",
-          "url": "https://magician.design/?ref=riseofmachine.com",
-          "date-added": "2023-12-12",
-          "slug": "magician"
-        },
-        {
-          "title": "MagicPath",
+          "title": "Magic Path",
           "body": "Generate front-end UIs from prompts.",
           "tag": "Freemium",
           "url": "https://www.magicpath.ai/?ref=riseofmachine.com",
@@ -1917,12 +1909,20 @@
           "slug": "magicpath"
         },
         {
-          "title": "Magicpatterns",
-          "body": "Optional) - Design.",
+          "title": "Magic Patterns",
+          "body": "AI design tool for product teams.",
           "tag": "Freemium",
           "url": "https://www.magicpatterns.com?ref=riseofmachine.com",
           "date-added": "2025-12-14",
           "slug": "magicpatterns"
+        },
+        {
+          "title": "Magician",
+          "body": "Generate icons, copy & images in Figma.",
+          "tag": "Free",
+          "url": "https://magician.design/?ref=riseofmachine.com",
+          "date-added": "2023-12-12",
+          "slug": "magician"
         },
         {
           "title": "Mew.Design",
@@ -1971,14 +1971,6 @@
           "url": "https://www.napkin.ai/?ref=riseofmachine.com",
           "date-added": "2025-06-01",
           "slug": "napkin-ai"
-        },
-        {
-          "title": "New UI",
-          "body": "Modern, semantic UI framework for building beautiful sites and apps.",
-          "tag": "Open-source",
-          "url": "https://new-ui.com/?ref=riseofmachine.com",
-          "date-added": "2025-11-19",
-          "slug": "new-ui"
         },
         {
           "title": "New UI Templates",
@@ -2170,6 +2162,14 @@
       "title": "Developer",
       "category": "developer",
       "content": [
+        {
+          "title": "✨ New UI",
+          "body": "Modern, semantic UI framework for building beautiful sites and apps.",
+          "tag": "Open-source",
+          "url": "https://new-ui.com/?ref=riseofmachine.com",
+          "date-added": "2025-11-19",
+          "slug": "new-ui"
+        },
         {
           "title": "AI SDK 5 by Vercel",
           "body": "The AI toolkit for TypeScript.",
@@ -4298,6 +4298,14 @@
           "url": "https://musicgeneratorai.com/?ref=riseofmachine.com",
           "date-added": "2025-06-06",
           "slug": "music-generator"
+        },
+        {
+          "title": "Orange Music",
+          "body": "Turn prompts into songs.",
+          "tag": "Freemium",
+          "url": "https://oaimusicgen.com?ref=riseofmachine.com",
+          "date-added": "2026-01-04",
+          "slug": "orange-music"
         },
         {
           "title": "Raplyrics",
@@ -7594,14 +7602,6 @@
       "category": "xtras",
       "content": [
         {
-          "title": "✨ Make for India",
-          "body": "Discover India-made innovations.",
-          "tag": "Free",
-          "url": "https://makeforindia.com/digital-products/?ref=riseofmachine.com",
-          "date-added": "2025-12-26",
-          "slug": "make-for-india"
-        },
-        {
           "title": "Acidtools",
           "body": "Free AI tools.",
           "tag": "Free",
@@ -7866,6 +7866,14 @@
           "slug": "madespace"
         },
         {
+          "title": "Make for India",
+          "body": "Discover India-made innovations.",
+          "tag": "Free",
+          "url": "https://makeforindia.com/digital-products/?ref=riseofmachine.com",
+          "date-added": "2025-12-26",
+          "slug": "make-for-india"
+        },
+        {
           "title": "Manus",
           "body": "Execute tasks, automate workflows.",
           "url": "https://manus.im/?ref=riseofmachine.com",
@@ -8032,6 +8040,14 @@
           "url": "https://speedvitals.com/rum?ref=riseofmachine.com",
           "date-added": "2025-08-21",
           "slug": "speedvitals-rum"
+        },
+        {
+          "title": "Stamp Generator",
+          "body": "Create custom stamps in seconds.",
+          "tag": "Free",
+          "url": "https://stampgenerator.net?ref=riseofmachine.com",
+          "date-added": "2026-01-04",
+          "slug": "stamp-generator"
         },
         {
           "title": "StoryBox",

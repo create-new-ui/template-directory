@@ -168,15 +168,7 @@
     "slug": "luma-ai"
   },
   {
-    "title": "Magician",
-    "body": "Generate icons, copy & images in Figma.",
-    "tag": "Free",
-    "url": "https://magician.design/?ref=riseofmachine.com",
-    "date-added": "2023-12-12",
-    "slug": "magician"
-  },
-  {
-    "title": "MagicPath",
+    "title": "Magic Path",
     "body": "Generate front-end UIs from prompts.",
     "tag": "Freemium",
     "url": "https://www.magicpath.ai/?ref=riseofmachine.com",
@@ -184,12 +176,20 @@
     "slug": "magicpath"
   },
   {
-    "title": "Magicpatterns",
-    "body": "Optional) - Design.",
+    "title": "Magic Patterns",
+    "body": "AI design tool for product teams.",
     "tag": "Freemium",
     "url": "https://www.magicpatterns.com?ref=riseofmachine.com",
     "date-added": "2025-12-14",
     "slug": "magicpatterns"
+  },
+  {
+    "title": "Magician",
+    "body": "Generate icons, copy & images in Figma.",
+    "tag": "Free",
+    "url": "https://magician.design/?ref=riseofmachine.com",
+    "date-added": "2023-12-12",
+    "slug": "magician"
   },
   {
     "title": "Mew.Design",
@@ -238,14 +238,6 @@
     "url": "https://www.napkin.ai/?ref=riseofmachine.com",
     "date-added": "2025-06-01",
     "slug": "napkin-ai"
-  },
-  {
-    "title": "New UI",
-    "body": "Modern, semantic UI framework for building beautiful sites and apps.",
-    "tag": "Open-source",
-    "url": "https://new-ui.com/?ref=riseofmachine.com",
-    "date-added": "2025-11-19",
-    "slug": "new-ui"
   },
   {
     "title": "New UI Templates",

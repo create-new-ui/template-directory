@@ -1,5 +1,13 @@
 [
   {
+    "title": "✨ New UI",
+    "body": "Modern, semantic UI framework for building beautiful sites and apps.",
+    "tag": "Open-source",
+    "url": "https://new-ui.com/?ref=riseofmachine.com",
+    "date-added": "2025-11-19",
+    "slug": "new-ui"
+  },
+  {
     "title": "AI SDK 5 by Vercel",
     "body": "The AI toolkit for TypeScript.",
     "tag": "Open-source",

@@ -701,13 +701,13 @@
   "luma-ai": [
     "design"
   ],
-  "magician": [
-    "design"
-  ],
   "magicpath": [
     "design"
   ],
   "magicpatterns": [
+    "design"
+  ],
+  "magician": [
     "design"
   ],
   "mewdesign": [
@@ -726,9 +726,6 @@
     "design"
   ],
   "napkin-ai": [
-    "design"
-  ],
-  "new-ui": [
     "design"
   ],
   "new-ui-templates": [
@@ -799,6 +796,9 @@
   ],
   "yenex": [
     "design"
+  ],
+  "new-ui": [
+    "developer"
   ],
   "ai-sdk-5-by-vercel": [
     "developer"
@@ -1578,6 +1578,9 @@
     "music"
   ],
   "music-generator": [
+    "music"
+  ],
+  "orange-music": [
     "music"
   ],
   "raplyrics": [
@@ -2795,9 +2798,6 @@
   "wondershare-filmora": [
     "video"
   ],
-  "make-for-india": [
-    "xtras"
-  ],
   "acidtools": [
     "xtras"
   ],
@@ -2897,6 +2897,9 @@
   "madespace": [
     "xtras"
   ],
+  "make-for-india": [
+    "xtras"
+  ],
   "manus": [
     "xtras"
   ],
@@ -2958,6 +2961,9 @@
     "xtras"
   ],
   "speedvitals-rum": [
+    "xtras"
+  ],
+  "stamp-generator": [
     "xtras"
   ],
   "storybox": [

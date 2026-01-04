@@ -1,13 +1,5 @@
 [
   {
-    "title": "✨ Make for India",
-    "body": "Discover India-made innovations.",
-    "tag": "Free",
-    "url": "https://makeforindia.com/digital-products/?ref=riseofmachine.com",
-    "date-added": "2025-12-26",
-    "slug": "make-for-india"
-  },
-  {
     "title": "Acidtools",
     "body": "Free AI tools.",
     "tag": "Free",
@@ -272,6 +264,14 @@
     "slug": "madespace"
   },
   {
+    "title": "Make for India",
+    "body": "Discover India-made innovations.",
+    "tag": "Free",
+    "url": "https://makeforindia.com/digital-products/?ref=riseofmachine.com",
+    "date-added": "2025-12-26",
+    "slug": "make-for-india"
+  },
+  {
     "title": "Manus",
     "body": "Execute tasks, automate workflows.",
     "url": "https://manus.im/?ref=riseofmachine.com",
@@ -438,6 +438,14 @@
     "url": "https://speedvitals.com/rum?ref=riseofmachine.com",
     "date-added": "2025-08-21",
     "slug": "speedvitals-rum"
+  },
+  {
+    "title": "Stamp Generator",
+    "body": "Create custom stamps in seconds.",
+    "tag": "Free",
+    "url": "https://stampgenerator.net?ref=riseofmachine.com",
+    "date-added": "2026-01-04",
+    "slug": "stamp-generator"
   },
   {
     "title": "StoryBox",

@@ -1038,11 +1038,6 @@
     "title": "Luma AI | AI Video Generation with Ray3 & Dream Machine | Luma AI",
     "description": "Create, animate & innovate with Luma’s AI. Use text, images, or video to generate realistic motion content with Ray3 and Dream Machine for next-gen storytelling."
   },
-  "magician": {
-    "slug": "magician",
-    "title": "BETWIN188: 88 Link Situs Slot Gacor Hari Ini Gampang Menang Mega Login Resmi",
-    "description": "Login 88 situs slot gacor terbaru hari ini gampang menang di BETWIN188 dengan live rtp terpercaya game slot88 mega cuan resmi dan terbaik."
-  },
   "magicpath": {
     "slug": "magicpath",
     "title": "MagicPath | The Best AI Design Tool, Make Apps and Websites",
@@ -1052,6 +1047,11 @@
     "slug": "magicpatterns",
     "title": "Magic Patterns",
     "description": "AI design tool to go from idea to production - prompt ideas to life, use your existing styles, and collaborate with your team."
+  },
+  "magician": {
+    "slug": "magician",
+    "title": "BETWIN188: 88 Link Situs Slot Gacor Hari Ini Gampang Menang Mega Login Resmi",
+    "description": "Login 88 situs slot gacor terbaru hari ini gampang menang di BETWIN188 dengan live rtp terpercaya game slot88 mega cuan resmi dan terbaik."
   },
   "mewdesign": {
     "slug": "mewdesign",
@@ -1074,11 +1074,6 @@
     "slug": "napkin-ai",
     "title": "Napkin AI - The visual AI for business storytelling",
     "description": "Just type, copy-paste or generate your text and Napkin will instantly transform it into insightful visuals. Make your communication more effective with Napkin."
-  },
-  "new-ui": {
-    "slug": "new-ui",
-    "title": "New UI - Modern, Semantic UI Framework",
-    "description": "New UI is a modern, semantic UI framework for building beautiful, accessible sites and apps."
   },
   "new-ui-templates": {
     "slug": "new-ui-templates",
@@ -1110,14 +1105,14 @@
     "title": "recraft-ai/recraft-v3-svg | Run with an API on Replicate",
     "description": "Recraft V3 SVG (code-named red_panda) is a text-to-image model with the ability to generate high quality SVG images including logotypes, and icons. The model supports a wide list of styles."
   },
+  "illustroke": {
+    "slug": "illustroke",
+    "ogImage": "https://illustroke.com/preview.jpg"
+  },
   "logo-galleria": {
     "slug": "logo-galleria",
     "title": "Logo Galleria：AI Logo Maker Free Online",
     "description": "Discover how our AI logo maker can generate unique, professional logos quickly and affordably. With AI logo maker free online features, customizable designs, and watermark-free options, Logo Galleria offers the best solutions for startups, YouTube channels, and more."
-  },
-  "illustroke": {
-    "slug": "illustroke",
-    "ogImage": "https://illustroke.com/preview.jpg"
   },
   "sargam-icons": {
     "slug": "sargam-icons",
@@ -1193,6 +1188,11 @@
     "slug": "yenex",
     "title": "Build, Browse And Compare Renewable Energy Systems - Yenex",
     "description": "Create renewable energy systems from solar to hydroponics. Explore thousands of products and real setups to compare costs, sizes, power, and efficiency."
+  },
+  "new-ui": {
+    "slug": "new-ui",
+    "title": "New UI - Modern, Semantic UI Framework",
+    "description": "New UI is a modern, semantic UI framework for building beautiful, accessible sites and apps."
   },
   "ai-sdk-5-by-vercel": {
     "slug": "ai-sdk-5-by-vercel",
@@ -1568,6 +1568,10 @@
     "title": "AI Note Writers",
     "description": "Overview of the AI Note Writer API"
   },
+  "tinygrad": {
+    "slug": "tinygrad",
+    "title": "tinygrad: A simple and powerful neural network framework"
+  },
   "synexa": {
     "slug": "synexa",
     "title": "Synexa AI: Deploy AI Models in One Line of Code",
@@ -1577,10 +1581,6 @@
     "slug": "zen-agents",
     "title": "Zencoder | The AI Coding Agent",
     "description": "Discover Zencoder's AI Coding Agent Platform for seamless code execution and collaboration. Boost productivity with advanced analytics, flexible deployment, and custom agents for your team."
-  },
-  "tinygrad": {
-    "slug": "tinygrad",
-    "title": "tinygrad: A simple and powerful neural network framework"
   },
   "zeno": {
     "slug": "zeno",
@@ -2157,6 +2157,10 @@
     "title": "Chat100.ai: Free Access to OpenAI GPT-4o and Claude 3.5",
     "description": "Page Description"
   },
+  "aicode": {
+    "slug": "aicode",
+    "title": "Redirecting..."
+  },
   "body-fat-calc": {
     "slug": "body-fat-calc",
     "title": "Redirecting..."
@@ -2165,10 +2169,6 @@
     "slug": "ai-agents-live",
     "title": "AI Agents & Services Directory | AI Agents Live Dec 2025",
     "description": "The definitive directory of curated AI agents & services - discover and explore the best AI agents to transform your business with AI Agents Live"
-  },
-  "aicode": {
-    "slug": "aicode",
-    "title": "Redirecting..."
   },
   "chatbotkit": {
     "slug": "chatbotkit",
@@ -2510,6 +2510,11 @@
     "title": "Anything - AI app builder",
     "description": "Anything is your AI agent for turning ideas into apps. Build sites, apps, tools, products and more just by describing what you want"
   },
+  "orange-music": {
+    "slug": "orange-music",
+    "title": "AI Music Generator Free Online",
+    "description": "AI Music Generator Free Online — turn prompts into songs with our free ai music generator toolkit: ai music generator · ai music generator free · ai song generator · free ai music generator · music ai generator"
+  },
   "droxy": {
     "slug": "droxy",
     "title": "Droxy",
@@ -2625,15 +2630,15 @@
     "title": "Y/n - Interactive Fanfiction",
     "description": "Y/n - Fanfiction but you're the main character. Play fics, write your own romance novels, or discover 1M+ interactive stories."
   },
-  "cartoon-to-real": {
-    "slug": "cartoon-to-real",
-    "title": "Cartoon to Real Life AI Generator – Turn Cartoon into Real Person",
-    "description": "Cartoon to Real Life made easy! Turn your cartoon, anime, or avatar images into realistic faces online using AI. Quick results, no design skills required."
-  },
   "bg-eraser": {
     "slug": "bg-eraser",
     "title": "BgEraser | Bulk Remove Background from Images Online Free",
     "description": "100% free online services to remove background from images in batch, replace background color in one single click, and download images in zip file."
+  },
+  "cartoon-to-real": {
+    "slug": "cartoon-to-real",
+    "title": "Cartoon to Real Life AI Generator – Turn Cartoon into Real Person",
+    "description": "Cartoon to Real Life made easy! Turn your cartoon, anime, or avatar images into realistic faces online using AI. Quick results, no design skills required."
   },
   "clipdrop": {
     "slug": "clipdrop",
@@ -2735,24 +2740,24 @@
     "title": "Best AI Headshot Generator for Professional Headshots in 10 minutes.",
     "description": "Create professional AI-generated headshots with HeadshotPhoto.io. Stand out with high-quality, customized headshots for your professional profile."
   },
-  "image-optimizer": {
-    "slug": "image-optimizer",
-    "title": "Image Optimizer AI — Generate & Compress Web-Ready Images",
-    "description": "Create brand-styled images with AI and optimize them for the web. Automatically compress, resize, strip metadata, convert formats, and boost SEO with the best Image Optimizer."
-  },
-  "facevary": {
-    "slug": "facevary",
-    "title": "facevary.com"
+  "dual-shades": {
+    "slug": "dual-shades",
+    "title": "Dual Shades - AI Photo Editor | Keep Subject Colored, Background B&W",
+    "description": "Transform photos instantly with Dual Shades AI. Keep your subject in vibrant color while turning the background black and white. Free online photo editor with drag-and-drop uploads."
   },
   "image-enlarger": {
     "slug": "image-enlarger",
     "title": "Imglarger | AI Image Enlarger, Enhancer, Editor and Converter",
     "description": "Imglarger online now provides AI tools to enhance and upscale images and photos, we also offer online photo editors and image converters to help you edit and convert images online."
   },
-  "dual-shades": {
-    "slug": "dual-shades",
-    "title": "Dual Shades - AI Photo Editor | Keep Subject Colored, Background B&W",
-    "description": "Transform photos instantly with Dual Shades AI. Keep your subject in vibrant color while turning the background black and white. Free online photo editor with drag-and-drop uploads."
+  "facevary": {
+    "slug": "facevary",
+    "title": "facevary.com"
+  },
+  "image-optimizer": {
+    "slug": "image-optimizer",
+    "title": "Image Optimizer AI — Generate & Compress Web-Ready Images",
+    "description": "Create brand-styled images with AI and optimize them for the web. Automatically compress, resize, strip metadata, convert formats, and boost SEO with the best Image Optimizer."
   },
   "imggen-ai": {
     "slug": "imggen-ai",
@@ -3104,15 +3109,15 @@
     "title": "Humata: AI meets your knowledge base",
     "description": "Humata is an AI agent that turns your documents into a fast, intelligent knowledge base for instant analysis, insights, and answers."
   },
-  "hyperfeed": {
-    "slug": "hyperfeed",
-    "title": "hyperfeed.ai",
-    "description": "Magic AI Workflows - Simple as Text"
-  },
   "decktopus": {
     "slug": "decktopus",
     "title": "Decktopus AI | Make presentations with AI | AI Presentation Assistant",
     "description": "Decktopus is an AI presentation maker, that will create amazing presentations in seconds. You only need to type the presentation title and your presentation is ready."
+  },
+  "hyperfeed": {
+    "slug": "hyperfeed",
+    "title": "hyperfeed.ai",
+    "description": "Magic AI Workflows - Simple as Text"
   },
   "intellibar": {
     "slug": "intellibar",
@@ -3338,15 +3343,15 @@
     "title": "ShortcutAI - ChatGPT in Apple Notes on macOS",
     "description": "ChatGPT in Apple Notes on macOS. Type +++ and have GPT-4 write for you."
   },
-  "sidekick": {
-    "slug": "sidekick",
-    "title": "Meet Sage, Your AI Personal Assistant | Sagekit",
-    "description": "Sage takes action across Gmail, Docs, and all your connected apps. Handle tasks now, create reusable shortcuts, and save hours weekly. Get started free."
-  },
   "riley-parenting": {
     "slug": "riley-parenting",
     "title": "Riley – Baby Tracker & Child Development Expert",
     "description": "Riley learns and grows with your family, offering personalized, data-backed guidance so you're ready for anything life—or your kids—throw your way."
+  },
+  "sidekick": {
+    "slug": "sidekick",
+    "title": "Meet Sage, Your AI Personal Assistant | Sagekit",
+    "description": "Sage takes action across Gmail, Docs, and all your connected apps. Handle tasks now, create reusable shortcuts, and save hours weekly. Get started free."
   },
   "skywork": {
     "slug": "skywork",
@@ -3565,15 +3570,15 @@
     "title": "DatViz AI – Advanced Data Visualization & Analytics",
     "description": "DatViz AI transforms raw data into compelling visual stories with advanced analytics and interactive visualizations."
   },
-  "domain-name-generator": {
-    "slug": "domain-name-generator",
-    "title": "Free AI Domain Name Generator - Refined",
-    "description": "Generate relevant domain names for your next project based on the product description and industry."
-  },
   "goodprompts": {
     "slug": "goodprompts",
     "title": "AiGoodPrompts | ChatGPT's Curated Prompt Library",
     "description": "Explore the best curated AI prompts for ChatGPT & Bard. Streamline processes and amplify AI's potential with prompts"
+  },
+  "domain-name-generator": {
+    "slug": "domain-name-generator",
+    "title": "Free AI Domain Name Generator - Refined",
+    "description": "Generate relevant domain names for your next project based on the product description and industry."
   },
   "heronai": {
     "slug": "heronai",
@@ -3790,14 +3795,14 @@
     "title": "AI agent that operates 24/7 to enhance your LinkedIn organic growth.",
     "description": "LiSeller engages your LinkedIn prospects by commenting on their posts with personalized, human-like messages relevant to your brand. Get up to a 76% connection rate and increase profile reach."
   },
+  "scribli": {
+    "slug": "scribli",
+    "title": "SEO AI bot - Scrib.li"
+  },
   "ocoya": {
     "slug": "ocoya",
     "title": "Social media management. Using AI. | Ocoya",
     "description": "Your AI-powered hub for seamless social media scheduling and content creation. Elevate your digital presence with smart automation and creative tools."
-  },
-  "scribli": {
-    "slug": "scribli",
-    "title": "SEO AI bot - Scrib.li"
   },
   "quickads": {
     "slug": "quickads",
@@ -3888,15 +3893,15 @@
     "slug": "social-hub",
     "title": "Socialhub.AI"
   },
-  "rizz-ai": {
-    "slug": "rizz-ai",
-    "title": "RIZZ AI Assistant: Free RIZZ GPT and Fun AI Dating Assistant",
-    "description": "RIZZ AI Assistant is an AI dating assistant built on the RIZE GPT model. Through a large number of high-quality chat and pick-up cases, RIZZ AI has trained chat LLMs who can understand users' psychology and are good at humorous pick-up conversations, becoming the best Tinder tutor."
-  },
   "createnew": {
     "slug": "createnew",
     "title": "Create Anything with AI — Free Video, Image, Music Tools | CreateNew",
     "description": "Access free AI tools for video, image, music, and more with CreateNew — an all-in-one platform built for fast, high-quality creation."
+  },
+  "rizz-ai": {
+    "slug": "rizz-ai",
+    "title": "RIZZ AI Assistant: Free RIZZ GPT and Fun AI Dating Assistant",
+    "description": "RIZZ AI Assistant is an AI dating assistant built on the RIZE GPT model. Through a large number of high-quality chat and pick-up cases, RIZZ AI has trained chat LLMs who can understand users' psychology and are good at humorous pick-up conversations, becoming the best Tinder tutor."
   },
   "dadan": {
     "slug": "dadan",
@@ -3998,11 +4003,6 @@
     "title": "Kite – Screen recorder for stunning demo videos",
     "description": "Create professional app demo videos in minutes. Auto cursor follow, zooms, text scenes, 3D mockups, AI voiceover, music, and more."
   },
-  "kling-ai": {
-    "slug": "kling-ai",
-    "title": "Kling AI",
-    "description": "Kling AI, tools for creating imaginative images and videos, based on state-of-art generative AI methods."
-  },
   "eddie": {
     "slug": "eddie",
     "title": "soon - Just another WordPress site",
@@ -4012,6 +4012,11 @@
     "slug": "d-id",
     "title": "D-ID Creative Reality Studio",
     "description": "Create professional videos using just a still image with text or audio powered by AI."
+  },
+  "kling-ai": {
+    "slug": "kling-ai",
+    "title": "Kling AI",
+    "description": "Kling AI, tools for creating imaginative images and videos, based on state-of-art generative AI methods."
   },
   "kungfu": {
     "slug": "kungfu",
@@ -4291,11 +4296,6 @@
     "title": "[Official] Wondershare Filmora: Edit Video as a Pro",
     "description": "Filmora is an all-in-one video editing software for desktop and mobile. Easily create professional videos with intuitive tools, AI-powered features, and creative effects."
   },
-  "make-for-india": {
-    "slug": "make-for-india",
-    "title": "Discover Swadeshi Digital Products | Make for India",
-    "description": "A curated selection of authentic Indian digital products. Find Indian alternatives to popular software and apps."
-  },
   "acidtools": {
     "slug": "acidtools",
     "title": "Find the top tools to maximize your productivity. - Acid Tools",
@@ -4434,6 +4434,11 @@
     "title": "Madespace :: AI Interior Design Studio for iOS",
     "description": "Madespace was built to make interior design accessible to everyone. Design your space, shop it and get expert help, all in one place. Try 3 days for free with Madespace for iOS."
   },
+  "make-for-india": {
+    "slug": "make-for-india",
+    "title": "Discover Swadeshi Digital Products | Make for India",
+    "description": "A curated selection of authentic Indian digital products. Find Indian alternatives to popular software and apps."
+  },
   "manus": {
     "slug": "manus",
     "title": "Manus: Hands On AI",
@@ -4469,16 +4474,6 @@
     "title": "Penny AI - Smart Shopping via Price Comparison & Pros and Cons Analysis",
     "description": "Shop smarter with Penny AI. Enjoy seamless price comparison, similar items discovery, and automated pros and cons analysis."
   },
-  "performameter": {
-    "slug": "performameter",
-    "title": "A Brand New Domain!",
-    "description": "Brought to you by Porkbun."
-  },
-  "imagebyqwen": {
-    "slug": "imagebyqwen",
-    "title": "Qwen Image - Advanced AI Photo Generator | ImageByQwen",
-    "description": "Qwen Image is the most advanced AI photo generator that transforms your ideas into stunning, photorealistic images using cutting-edge Qwen models. Create beautiful photos in seconds. Credits required for usage."
-  },
   "hoody": {
     "slug": "hoody",
     "title": "For Sale Page"
@@ -4487,6 +4482,16 @@
     "slug": "fluxaicreate",
     "title": "Flux AI Image, Video&Kontext Generator | All-in-One creation | AI图片生成器",
     "description": "Unlock your creative potential with Flux AI. Generate  images, videos, and content from text using advanced AI. Fast, intuitive, and totally free to start."
+  },
+  "imagebyqwen": {
+    "slug": "imagebyqwen",
+    "title": "Qwen Image - Advanced AI Photo Generator | ImageByQwen",
+    "description": "Qwen Image is the most advanced AI photo generator that transforms your ideas into stunning, photorealistic images using cutting-edge Qwen models. Create beautiful photos in seconds. Credits required for usage."
+  },
+  "performameter": {
+    "slug": "performameter",
+    "title": "A Brand New Domain!",
+    "description": "Brought to you by Porkbun."
   },
   "profilespider": {
     "slug": "profilespider",
@@ -4600,5 +4605,12 @@
     "slug": "vibeflow",
     "title": "ViBeFlOw Studios | Music Production & Video Content Creation Services",
     "description": "ViBeFlOw Studios offers professional music production and video content creation services in Fullerton, CA. Specializing in live events, DJ sets, and high-quality audio-visual content."
+  },
+  "stamp-generator": {
+    "slug": "stamp-generator",
+    "title": "Free AI Stamp Generator & Online Stamp Maker | StampGenerator.net",
+    "description": "Free AI stamp maker and generator creates professional custom stamps in seconds. Perfect for company stamps, medical stamps, Chinese seals online.",
+    "ogImage": "https://stampgenerator.net/logo.png",
+    "twitterHandle": "@https://stampgenerator.net"
   }
 }
